@@ -4,6 +4,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * 泛型
@@ -32,8 +33,8 @@ public class Generic <T>{
     @Test
     public void print(){
 
-        Pair<String> pair1=new Pair("string",new Integer(1));
-        System.out.println(pair1.getSecond());
+//        Pair<String> pair1=new Pair("string",new Integer(1));
+//        System.out.println(pair1.getSecond());
 
 //        Generic<String> generic = new Generic<>();
 //
