@@ -35,7 +35,7 @@ public class FinalizeEscapeGC {
 //        }else {
 //            System.out.println("No,I'm dead");
 //        }
-        System.gc();
+        Thread.sleep(1000000);
         // 下面这段代码与上面那段一样，但是这次却拯救失败
 //        SAVE_HOOK = null;
 //        System.gc();
