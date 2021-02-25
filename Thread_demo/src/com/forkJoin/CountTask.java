@@ -53,14 +53,14 @@ public class CountTask extends RecursiveTask<Integer> {
      */
     public static void main(String[] args) {
         long startTime = System.currentTimeMillis();
-        ForkJoinPool forkJoinPool = new ForkJoinPool();
-        CountTask countTask = new CountTask(1,10000);
+        ForkJoinPool forkJoinPool = new ForkJoinPool(4);
+        CountTask countTask = new CountTask(1,100000);
 
         Future<Integer> result = forkJoinPool.submit(countTask);
 
         try {
+            System.out.println("活跃线程数："+forkJoinPool.getRunningThreadCount());
             System.out.println("计算结果："+result.get());
-            System.out.println("活跃线程数："+forkJoinPool.getActiveThreadCount());
             System.out.println("发生工作窃取的次数："+forkJoinPool.getStealCount());
         } catch (InterruptedException e) {
             e.printStackTrace();
