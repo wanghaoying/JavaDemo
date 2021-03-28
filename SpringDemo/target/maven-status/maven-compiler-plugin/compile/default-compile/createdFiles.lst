@@ -1,0 +1,8 @@
+org/example/config/AppConfig02.class
+org/example/App.class
+org/example/dao/CarDao.class
+org/example/service/CarService.class
+org/example/pojo/Car.class
+org/example/controller/CarController.class
+org/example/config/ComponentScanFilter.class
+org/example/config/AppConfig01.class
