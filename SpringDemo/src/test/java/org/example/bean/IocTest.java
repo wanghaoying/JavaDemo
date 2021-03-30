@@ -1,17 +1,63 @@
 package org.example.bean;
 
-import org.example.config.AppConfig01;
-import org.example.config.AppConfig02;
-import org.example.config.AppConfig03;
+import com.mchange.v2.c3p0.ComboPooledDataSource;
+import org.example.config.*;
 import org.example.pojo.Person;
+import org.example.service.CarService;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
+import javax.sql.DataSource;
 import java.util.Map;
 
 public class IocTest {
 
+    /**
+     *  设置当前的运行环境的运行方式一共有两种：
+     *  1、通过在命令行传入指定参数，VM options: -Dspring.profiles.active=test
+     *  2、通过代码来进行设置当前的环境
+     *          {
+     *             AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext();
+     *             applicationContext.getEnvironment().setActiveProfiles("test");
+     *             applicationContext.register(AppConfig05.class);
+     *             applicationContext.refresh();
+     *          }
+     */
+    @Test
+    public void test05(){
+//        AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext(AppConfig05.class);
+        AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext();
+
+        applicationContext.getEnvironment().setActiveProfiles("test");
+        applicationContext.register(AppConfig05.class);
+        applicationContext.refresh();
+
+
+        String[] beans = applicationContext.getBeanNamesForType(DataSource.class);
+        for (String bean : beans) {
+            System.out.println(bean);
+        }
+
+        Map<String, ComboPooledDataSource> beansOfType = applicationContext.getBeansOfType(ComboPooledDataSource.class);
+        for (Map.Entry<String, ComboPooledDataSource> Entry : beansOfType.entrySet()) {
+            Entry.getValue().close();
+        }
+        applicationContext.close();
+    }
+
+
+    @Test
+    public void test04(){
+        AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext(AppConfig04.class);
+        System.out.println("----------ioc容器初始化完成-----------");
+
+        CarService carService = applicationContext.getBean(CarService.class);
+        System.out.println(carService);
+
+
+        applicationContext.close();
+    }
 
     @Test
     public void test03(){

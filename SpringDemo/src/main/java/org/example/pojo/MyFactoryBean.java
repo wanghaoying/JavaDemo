@@ -6,7 +6,7 @@ public class MyFactoryBean implements FactoryBean<Person> {
     // 生产Bean的方法
     @Override
     public Person getObject() throws Exception {
-        return new Person("张三",20);
+        return new Person();
     }
 
     // 获取生产的Bean的类型
