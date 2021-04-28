@@ -9,7 +9,132 @@ public class Solution02 {
 
     @Test
     public void test(){
-        System.out.println(findKth(new int[] {1332802,1177178,1514891,871248,753214,123866,1615405,328656,1540395,968891,1884022,252932,1034406,1455178,821713,486232,860175,1896237,852300,566715,1285209,1845742,883142,259266,520911,1844960,218188,1528217,332380,261485,1111670,16920,1249664,1199799,1959818,1546744,1904944,51047,1176397,190970,48715,349690,673887,1648782,1010556,1165786,937247,986578,798663},49,24));
+        System.out.println(calculate("3+2*2"));
+    }
+
+    /**
+     * leetcode 227: 基本计数器II
+     * 给你一个字符串表达式 s ，请你实现一个基本计算器来计算并返回它的值。
+     * 整数除法仅保留整数部分。
+     *
+     * 例： 输入：s = "3+2*2"    输出：7
+     *
+     * 思路：使用一个栈来存储数字和操作符，或者用一个栈存储数字，另一个栈存储操作符
+     * @param s
+     * @return
+     */
+    public int calculate(String s) {
+        if (s == null || s.trim().length() == 0){
+            return 0;
+        }
+        s = s.trim();
+        // 声明一个操作数栈 和一个 运算符栈
+        Stack<Integer> optNum = new Stack<>();
+        Stack<Character> optChar = new Stack<>();
+
+        int num = 0;
+        // 每一个操作符和后面的一个数字绑定在一起，假设初始的第一个数字与sign绑定在一起
+        char sign = '+';
+        for (int i = 0; i < s.length(); i++){
+            char c = s.charAt(i);
+            // 计算数字
+            if (c >= '0' && c <= '9'){
+                num = num * 10 + (c - '0');
+            }
+            // 针对操作符进行处理
+            if (c < '0' && c != ' ' || i == s.length()-1){
+                if (sign == '+' || sign == '-'){
+                    optChar.push(sign);
+                    optNum.push(num);
+                }
+
+                if (sign == '*'){
+                    optNum.push(optNum.pop() * num);
+                }
+
+                if (sign == '/'){
+                    optNum.push(optNum.pop() / num);
+                }
+
+                sign = c;
+                num = 0;
+            }
+        }
+        // 针对待计算的加减法再重新计算一次
+        int z = 0, f = 0;
+        while (optNum.size() > 0){
+            if (optChar.pop() == '+'){
+                z += optNum.pop();
+            }else {
+                f += optNum.pop();
+            }
+        }
+        return z - f;
+    }
+
+    /**
+     * 给定一个数组arr，返回arr的最长无的重复子串的长度(无重复指的是所有数字都不相同)。
+     *
+     * 思路1：暴力求解，计算以每个数组中的元素为起点的无重复子串的长度，然后取所有情况下的最大值
+     * 时间复杂度为O(n^2)
+     *
+     * 思路2：上面的问题中存在重复求解的问题，那么我们可以使用一个map存储每个数组出现的位置索引，
+     * 当遇到一个位置上的数字的时候，去map中查看这个数字是否出现过，如果没有出现过，就把当前的位置
+     * 作为value放入map中，否则计算maxLength，然后将这个数字的value，替换成当前的位置
+     *
+     * @param arr
+     * @return
+     */
+    public int maxLength (int[] arr) {
+        if (arr == null || arr.length == 0){
+            return 0;
+        }
+        int maxLength = 1, start = 0;
+        // 声明一个hashmap来存储这些数据
+        HashMap<Integer,Integer> hashMap = new HashMap<>();
+
+        for (int i = 0; i < arr.length; i++){
+            if (hashMap.containsKey(arr[i])){
+                maxLength = Math.max(maxLength, i-start);
+                start = Math.max(start,hashMap.get(arr[i])+1);
+            }
+            hashMap.put(arr[i],i);
+        }
+        // 对于最后一次长度的判断
+        maxLength = Math.max(maxLength,arr.length - start);
+
+        return maxLength;
+    }
+
+    /**
+     * 给定一个数组arr，返回子数组的最大累加和
+     * 例如，arr = [1, -2, 3, 5, -2, 6, -1]，所有子数组中，[3, 5, -2, 6]可以累加出最大的
+     * 和12，所以返回12.  题目保证没有全为负数的数据
+     * [要求]
+     * 时间复杂度为O(n)，空间复杂度为O(1)
+     *
+     * 思路：子数组的最大累加和，当前的子数组是否向后拓展，在于当前的子数组的累加和是否是大于0的，
+     * 如果大于0，这说明当前子数组向后拓展之后，可能得到最大的累加和，如果当前的子数组和小于等于
+     * 0，则向后拓展后并不能比不拓展更好
+     * @param arr
+     * @return
+     */
+    public int maxsumofSubarray (int[] arr) {
+        if (arr == null || arr.length == 0){
+            return 0;
+        }
+        int max = arr[0], tmp = arr[0];
+
+        for (int i = 1; i < arr.length; i++){
+            if (tmp > 0){
+                tmp += arr[i];
+            }else {
+                tmp = arr[i];
+            }
+            max = Math.max(max,tmp);
+        }
+
+        return max;
     }
 
     /**
@@ -143,8 +268,9 @@ public class Solution02 {
      * @return
      */
     public ArrayList<ArrayList<Integer>> levelOrder (TreeNode root) {
-        if (root == null)
+        if (root == null) {
             return new ArrayList<>();
+        }
         // 声明一个队列
         Queue<TreeNode> queue = new LinkedList<>();
         queue.offer(root);
@@ -157,10 +283,12 @@ public class Solution02 {
             for (int i = queue.size(); i > 0; i--){
                 TreeNode t = queue.poll();
                 arrayList.add(t.val);
-                if (t.left != null)
+                if (t.left != null) {
                     queue.offer(t.left);
-                if (t.right != null)
+                }
+                if (t.right != null) {
                     queue.offer(t.right);
+                }
             }
             arrayLists.add(arrayList);
         }
@@ -178,8 +306,9 @@ public class Solution02 {
      * @return
      */
     public int findKth(int[] a, int n, int K) {
-        if (a == null || a.length == 0 || K <= 0 || K > a.length)
+        if (a == null || a.length == 0 || K <= 0 || K > a.length) {
             return -1;
+        }
         // 第K大，则为第n-K+1小的数字，则尝试取最小的n-K+1个数字
         ArrayList<Integer> arrayList = GetLeastNumbers_Solution(a, n - K + 1);
         return arrayList.get(arrayList.size()-1);
@@ -213,8 +342,9 @@ public class Solution02 {
     }
 
     private int findTopK(int[] nums, int k, int i, int j){
-        if (i >= j)
+        if (i >= j) {
             return i;
+        }
         int mid = getIndex(nums,i,j);
         if (mid > k-1){
             return findTopK(nums, k, i, mid-1);
@@ -547,8 +677,9 @@ public class Solution02 {
             while (right >= i && nums[right] > n){
                 right--;
             }
-            if (left < right)
+            if (left < right) {
                 swap(nums,left,right);
+            }
         }
         swap(nums,i,right);
         return right;
