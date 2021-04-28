@@ -20,6 +20,7 @@ import java.beans.PropertyVetoException;
  *
  * 下面以配置不同的数据库连接池为例进行演示
  */
+
 @Profile(value = {"test","dev","prod"})
 @PropertySource("classpath:/iocTest.properties")
 @Configuration
@@ -69,4 +70,6 @@ public class AppConfig05 implements EmbeddedValueResolverAware {
     public void setEmbeddedValueResolver(StringValueResolver resolver) {
         driverClass = resolver.resolveStringValue("${db.driver}");
     }
+
+
 }

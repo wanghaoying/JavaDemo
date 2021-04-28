@@ -14,6 +14,7 @@ import java.util.Optional;
 
 public class InputTest {
 
+
     // 使用nio来读取文件，这个时候其实是没有起到 no-blocking
     @Test
     public void test01() throws IOException {
@@ -53,7 +54,7 @@ public class InputTest {
     }
 
     @Test
-    public void test03() throws IOException {
+    public void test03() throws IOException, InterruptedException {
         ServerSocketChannel server = ServerSocketChannel.open();
         server.bind(new InetSocketAddress(7788));
 
@@ -65,7 +66,7 @@ public class InputTest {
         server.register(selector, SelectionKey.OP_ACCEPT);
 
         while (selector.select() > 0){
-//            System.out.println("来了一个新的事件");
+            System.out.println("来了一个新的事件");
 
             // 获取返回的事件信息
             Iterator<SelectionKey> selectionKeyIterator = selector.selectedKeys().iterator();
@@ -75,6 +76,8 @@ public class InputTest {
 
                 // 接收事件就绪
                 if (selectionKey.isAcceptable()) {
+
+                    System.out.println("这是一个连接事件");
 
                     // 8. 获取客户端的链接
                     SocketChannel client = server.accept();
@@ -86,6 +89,8 @@ public class InputTest {
                     client.register(selector, SelectionKey.OP_READ);
 
                 } else if (selectionKey.isReadable()) { // 读事件就绪
+
+                    System.out.println("这是一个读事件");
 
                     // 9. 获取当前选择器读就绪状态的通道
                     SocketChannel client = (SocketChannel) selectionKey.channel();
@@ -105,14 +110,18 @@ public class InputTest {
                         buffer.clear();
                     }
                     client.register(selector, SelectionKey.OP_WRITE);
+//                    client.close();  这里不能执行channal.close操作，否则无法返回
+
                 }else if (selectionKey.isWritable()){
+                    System.out.println("这是一个写事件");
+
                     SocketChannel client = (SocketChannel) selectionKey.channel();
 
                     ByteBuffer byteBuffer = ByteBuffer.allocate(1024);
 
                     try{
                         FileChannel fileChannel = FileChannel.open(
-                                Paths.get("2.txt"),StandardOpenOption.READ,
+                                Paths.get("1.txt"),StandardOpenOption.READ,
                                 StandardOpenOption.WRITE);
 
                         while (fileChannel.read(byteBuffer)!= -1){
@@ -120,9 +129,12 @@ public class InputTest {
                             client.write(byteBuffer);
                             byteBuffer.clear();
                         }
+
                     }catch (Exception e){
                         e.printStackTrace();
                     }finally {
+                        System.out.println("执行完毕");
+
                         client.close();
                     }
 
@@ -196,14 +208,14 @@ public class InputTest {
                         buffer.clear();
                     }
 
-                    client.register(selector,SelectionKey.OP_WRITE);
+                    selectionKey.interestOps(SelectionKey.OP_WRITE);
 
                 }else if (selectionKey.isWritable()){
                     SocketChannel client = (SocketChannel) selectionKey.channel();
 
                     ByteBuffer byteBuffer = ByteBuffer.allocate(1024);
 
-                    Thread.sleep(100000);
+                    Thread.sleep(10);
 
                     FileChannel fileChannel = FileChannel.open(
                             Paths.get("1.txt"),StandardOpenOption.READ);

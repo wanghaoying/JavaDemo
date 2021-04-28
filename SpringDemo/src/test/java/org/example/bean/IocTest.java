@@ -2,16 +2,26 @@ package org.example.bean;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import org.example.config.*;
+import org.example.pojo.Car;
 import org.example.pojo.Person;
 import org.example.service.CarService;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import javax.sql.DataSource;
 import java.util.Map;
 
 public class IocTest {
+
+    @Test
+    public void test06(){
+        ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("ioc.xml");
+        Car car = applicationContext.getBean(Car.class);
+        System.out.println(car);
+        System.out.println();
+    }
 
     /**
      *  设置当前的运行环境的运行方式一共有两种：
@@ -45,7 +55,6 @@ public class IocTest {
         }
         applicationContext.close();
     }
-
 
     @Test
     public void test04(){
