@@ -9,7 +9,230 @@ public class Solution02 {
 
     @Test
     public void test(){
-        System.out.println(calculate("3+2*2"));
+
+    }
+
+    /**
+     * 对于一个给定的链表，返回环的入口节点，如果没有环，返回null
+     * 拓展：你能给出不利用额外空间的解法么？
+     *
+     * 思路1：类似判断是否存在环一样，使用一个hashset存储key，第一个重复的节点就是环的入口节点
+     *
+     * 思路2：类似于判断是否存在环那样的快慢指针，下面有如下假设：
+     * A：链表的起始节点
+     * B：链表的环的起始节点
+     * C：快慢指针首次相遇的节点
+     * D：慢指针首次到达B时，快指针所在的位置
+     * 假设AB长度为a，BC长度为b，那么则有DB长度为b，CD长度为a-b，CB长度为a
+     * 那么则有这样的思路，当快慢指针到达C后，快指针从头开始走，每次直走一步，那么下次他们再次遇到
+     * 的位置就是环的起点
+     *
+     */
+    public ListNode detectCycle(ListNode head) {
+        if (head == null){
+            return head;
+        }
+
+        // 思路1：使用一个额外的空间hashset存储之前出现过的node
+//        HashSet<ListNode> hashSet = new HashSet<>();
+//        while (head != null){
+//            if (hashSet.contains(head)){
+//                return head;
+//            }else {
+//                hashSet.add(head);
+//            }
+//            head = head.next;
+//        }
+
+        ListNode fast = head, slow = head;
+        // 规避链表长度小于2的情况
+        if (fast.next != null){
+            fast = fast.next.next;
+            slow = slow.next;
+        }else {
+            return null;
+        }
+
+        // 寻找到相遇的节点C
+        while (fast != null && fast != slow){
+            if (fast.next != null){
+                fast = fast.next.next;
+                slow = slow.next;
+            }else {
+                return null;
+            }
+        }
+        // 不存在环
+        if (fast == null){
+            return null;
+        }
+
+        // 存在环
+        fast = head;
+        while (fast != slow){
+            fast = fast.next;
+            slow = slow.next;
+        }
+
+        return fast;
+    }
+
+    /**
+     * 给出两个有序的整数数组A和B，请将数组B合并到数组A中，变成一个有序的数组
+     * 注意：
+     * 可以假设A数组有足够的空间存放B数组的元素，A和B中初始的元素数目分别为M和 N
+     *
+     * 思路1：可以开辟一个额外的地址空间，O(m+n)的地址空间，类似于归并排序中的两个有序子数组合并那样
+     * 将数据合并到临时数组C中，然后再回调到A中
+     *
+     * 思路2：使用三个指针，指针i，j分别指向数组A 和 数组B的最后一个元素，而指针K指向数组A合并完数组
+     * B之后的最后一个元素的位置，每次挑选i或者j中最大的数字进行填充，空间复杂度为O(1)，而且只需要
+     * 对数组扫描一次
+     */
+    public void merge(int A[], int m, int B[], int n) {
+//        if (A == null || B == null || A.length != m || B.length != n){
+//            return;
+//        }
+
+        // 思路1，开辟额外的地址空间
+//        int[] c = new int[m+n];
+//        int i = 0, j = 0, offset = 0;
+//        while (i < m && j < n){
+//            if (A[i] <= B[j]){
+//                c[offset++] = A[i++];
+//            }else {
+//                c[offset++] = B[j++];
+//            }
+//        }
+//        // 将未处理完的数组中的元素，继续填充
+//        while (i < m){
+//            c[offset++] = A[i++];
+//        }
+//        while (j < n){
+//            c[offset++] = B[j++];
+//        }
+//
+//        for (int k = 0; k < m+n; k++){
+//            A[k] = c[k];
+//        }
+
+        // 思路2，使用三个指针完成操作
+        int i = m-1, j = n-1, k = m+n-1;
+        while (i >= 0 && j >= 0){
+            if (A[i] >= B[j]){
+                A[k--] = A[i--];
+            }else {
+                A[k--] = B[j--];
+            }
+        }
+
+        while (i >= 0){
+            A[k--] = A[i--];
+        }
+        while (j >= 0){
+            A[k--] = B[j--];
+        }
+    }
+
+    /**
+     * 判断给定的链表中是否有环。如果有环则返回true，否则返回false。
+     * 你能给出空间复杂度的解法么？
+     *
+     * 思路1：使用一个hashset来存储每个节点，如果有一个节点已经在hashset中出现过了，那么这个节点
+     * 就是环的入口节点，这里有个坑（hashset中比较是否存在某个key的时候，如果hashcode相同的情况下，
+     * 会使用equals比较这两个key，如果重写了ListNode的hashcode方法，则存在一种可能：两个不同的key
+     * 对象，但是其hashcode码相同，key1.equals(key2) 为true，那么虽然key2没有插入过hashset。但是依然
+     * 会被判定存在）
+     *  比如下面的这段代码就会打印出“true”
+     *  ```java
+     *  HashSet<String> hashSet = new HashSet<>();
+     *  String s1 = new String("hello world");
+     *  String s2 = new String("hello world");
+     *  hashSet.add(s1);
+     *  System.out.println(hashSet.contains(s2));
+     *  print：
+     *  true
+     *  ```
+     *
+     * 思路2：使用一组快慢指针，快指针每次走两步，慢指针每次走1步，如果存在环，那么一定还有快满指针
+     * 相遇的情况，这个使用的是直接地址比较，就没有上面的那个问题
+     */
+    public boolean hasCycle(ListNode head) {
+        if (head == null){
+            return false;
+        }
+        // 声明两个快满指针，并针对特殊情况进行处理
+        ListNode fast = head, slow = head;
+        if (fast.next != null){
+            fast = fast.next.next;
+            slow = slow.next;
+        }else {
+            return false;
+        }
+        // 判断是否存在环
+        while (fast != null && fast != slow){
+            if (fast.next != null){
+                fast = fast.next.next;
+                slow = slow.next;
+            }else {
+                return false;
+            }
+        }
+        if (fast == slow){
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * 将给出的链表中的节点每 k 个一组翻转，返回翻转后的链表
+     * 如果链表中的节点数不是 k 的倍数，将最后剩下的节点保持原样
+     * 你不能更改节点中的值，只能更改节点本身。
+     * 要求空间复杂度 O(1)
+     * 例如：
+     * 给定的链表是1→2→3→4→5
+     * 对于 k=2, 你应该返回 2→1→4→3→5
+     * 对于 k=3, 你应该返回 3→2→1→4→5
+     *
+     * 思路：先统计链表的长度，寻得需要翻转多少组长度为K的链表
+     * 然后对着N组链表按照要求进行翻转
+     */
+    public ListNode reverseKGroup (ListNode head, int k) {
+        if (k <= 1){
+            return head;
+        }
+        // 计算链表的长度
+        int listLength = 0;
+        ListNode p = head;
+        while (p != null){
+            listLength++;
+            p = p.next;
+        }
+        // 如果链表的长度小于k，则直接返回原来的链表
+//        if (listLength < k){
+//            return head;
+//        }
+        // 计算有多少组需要翻转
+        int n = listLength / k;
+        // 对链表中的每组进行翻转
+        ListNode newHead = new ListNode(0);
+        newHead.next = head;
+        p = newHead;
+        for (int i = 0; i < n; i++){
+            ListNode tmp, prev = p;
+            for (int j = 0; j < k; j++){
+                tmp = head.next;
+                head.next = prev;
+                prev = head;
+                head = tmp;
+            }
+            tmp = p.next;
+            tmp.next = head;
+            p.next = prev;
+            p = tmp;
+        }
+        return newHead.next;
     }
 
     /**
