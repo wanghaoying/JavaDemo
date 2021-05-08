@@ -9,7 +9,243 @@ public class Solution02 {
 
     @Test
     public void test(){
+        System.out.println(LCS("2^3","12^3^2^34"));
+    }
 
+    /**
+     * 给定两个字符串str1和str2,输出两个字符串的最长公共子串
+     * 题目保证str1和str2的最长公共子串存在且唯一。
+     *
+     * 1、暴力求解：对str1 和  str2 中所有可能的子串进行判断，时间复杂度为O(n^3)，时间复杂度很高
+     *  存在问题，过不了第六个用例
+     *  
+     * 2、暴力求解中存在很多重复子问题，
+     */
+    public String LCS (String str1, String str2) {
+        if (str1 == null || str2 == null){
+            return null;
+        }
+        if (str1.length() == 0 || str2.length() == 0){
+            return "";
+        }
+
+        if (str1.length() < str2.length()){
+            return LCS(str2, str1);
+        }
+
+        // 声明变量用来保存
+        int maxLength = 1;
+        int end = -1;
+
+
+        // 使用动态规划来完成最长公共子串的计算
+        // 关键：在于定义一个合适的状态转移表，使这个状态转移表能表现成符合题目的方式
+        // 可以这样定义一个状态转移表：table[i,m] = true，代表对于str2中，i~m 位置上
+        // 的字符串，在str1中也存在，为false，则在str1中不存在
+        // 对于，table[i-1,m]的计算，只需要计算str2.charAt(i-1)的字符是否与str1的对应
+        // 位置上的字符是否相等 && table[i,m] == true
+        boolean[][] stateTable = new boolean[str2.length()][str2.length()];
+        // 需要使用额外的空间，保存str2中的某个字符str2.charAt(t)，在str1中出现的位置
+        // 为了能快速的定位到在str1中出现的位置，需要使用一个hashmap，但是某个字符在str1中
+        // 出现的位置可能不止一个，需要把这些位置全部保存下来，所以考虑value的类型为一个ArrayList
+        HashMap<Character, ArrayList<Integer>> hashMap = new HashMap<>();
+        // 用一个hashset保存str2中的字符
+        HashSet<Character> hashSet = new HashSet<>();
+        for (int i = 0; i < str2.length(); i++){
+            if (!hashSet.contains(str2.charAt(i))){
+                hashSet.add(str2.charAt(i));
+            }
+        }
+        // 遍历str1中的字符，如果这个字符在str2中出现过，那么就把他的位置插入到hashmap的对应的value中
+        for (int i = 0; i < str1.length(); i++){
+            if (hashSet.contains(str1.charAt(i))){
+                if (!hashMap.containsKey(str1.charAt(i))){
+                    hashMap.put(str1.charAt(i),new ArrayList<>());
+                }
+                hashMap.get(str1.charAt(i)).add(i);
+            }
+        }
+        // 初始化状态数组,如果这个字符在str1中出现过，那么就把他设置为true
+        for (int i = 0; i < str2.length(); i++){
+            if (hashMap.containsKey(str2.charAt(i))){
+                stateTable[i][i] = true;
+                end = i;
+            }
+        }
+
+        // 更新状态数组，k代表公共子串的长度-1
+        // i为当前子串可能的起始位置，最大为str2.length-k-1
+        for (int j = 1; j <= str2.length()-1; j++){
+            // j为可能的最长公共子串的结束位置
+            for (int i = j-1; i >= 0; i--){
+                // 如果i到j 的是一个公共子串的话，那么i+1 ~ j，一定也是公共子串
+                if (stateTable[i+1][j]){
+                    // 获取str2的j位置上的字符，然后查找他在str1中出现的位置
+                    ArrayList tmp = hashMap.get(str2.charAt(j));
+                    // 遍历这个字符在str1中出现的位置，赋值给integer
+                    for (int m = 0; m <= tmp.size()-1; m++){
+                        int integer = (int) tmp.get(m);
+                        // 保证 integer-k的索引能够大于等于0，并且如果str1在该位置上的字符与str2在i位置上
+                        // 的字符相同，那么就说明，i ~ j 是一个公共子串
+                        if ((integer-(j-i)) >= 0 && str1.charAt(integer-(j-i)) == str2.charAt(i)){
+                            stateTable[i][j] = true;
+                            // 如果当前公共子串的长度大于了maxLength，那么就更新maxLength的值
+                            if (j-i+1 > maxLength){
+                                maxLength = j-i+1;
+                                end = j;
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        if (end == -1){
+            return "";
+        }
+        return str2.substring(end-maxLength+1,end+1);
+    }
+
+    /**
+     * 给定一个链表，删除链表的倒数第 n 个节点并返回链表的头指针
+     * 例如，
+     * 给出的链表为: 1→2→3→4→5, n= 2n=2.
+     * 删除了链表的倒数第 4 个节点之后,链表变为1→2→3→5.
+     *
+     * 备注：
+     * 题目保证 n一定是有效的
+     * 请给出请给出时间复杂度为 O(n) 的算法
+     *
+     * 思路：时间复杂度要求为O(n)，那么就需要在一次遍历中找到这个链表中的倒数第n个节点，并且还要记录下他的前驱节点
+     * 那么存在两种方案：
+     * 1、使用一个ArrayList存储链表中的每个节点，对链表进行一次遍历之后，得到链表的长度，然后将其
+     * 倒数第n个节点的前驱节点指向后置节点
+     * 2、上面的方案需要额外使用一个O(n)的空间，可以使用三个指针来优化空间，一个指针先走n步，然后
+     * 第二个指针开始走，第三个指针永远指向第二个指针所指向的节点的前驱节点，当第一个指针走完链表的时候
+     * 第二个指针指向的位置刚好是倒数第n个节点的位置，第三个指针指向的是其前驱节点，那么只需要将其前驱
+     * 指向后置节点即可
+     */
+    public ListNode removeNthFromEnd (ListNode head, int n) {
+        if (head == null || n <= 0){
+            return head;
+        }
+        // 方案1
+//        ArrayList<ListNode> arrayList = new ArrayList<>();
+//        ListNode p = head;
+//        int listLength = 0;
+//        while (p != null){
+//            arrayList.add(p);
+//            listLength++;
+//            p = p.next;
+//        }
+//
+//        if (listLength == n){
+//            return head.next;
+//        }
+//        if (n == 1){
+//            arrayList.get(listLength-2).next = null;
+//            return head;
+//        }
+//
+//        arrayList.get(listLength-n-1).next = arrayList.get(listLength-n+1);
+//        return head;
+
+        // 方案2
+        // 声明这三个指针
+        ListNode fast = head, slow = head, prev = head;
+        // fast 指针先走n步
+        for (int i = 0; i < n; i++) {
+            fast = fast.next;
+        }
+        // 找到倒数第n个节点的位置
+        while (fast != null){
+            fast = fast.next;
+            prev = slow;
+            slow = slow.next;
+        }
+        // 删除第一个节点的情况
+        if (slow == head){
+            return head.next;
+        }
+
+        prev.next = slow.next;
+        return head;
+    }
+
+    /**
+     * 以字符串的形式读入两个数字，编写一个函数计算它们的和，以字符串形式返回。
+     * （字符串长度不大于100000，保证字符串仅由'0'~'9'这10种字符组成）
+     *
+     * 思路：从最后一位开始计算，逐级向前相加
+     */
+    public String solve (String s, String t) {
+        if (s == null || s.length() == 0){
+            return t;
+        }
+        if (t == null || t.length() == 0){
+            return s;
+        }
+        // 使用一个StringBuilder来
+        StringBuilder sb = new StringBuilder(Math.max(s.length(),t.length())+1);
+        int i = s.length()-1, j = t.length()-1;
+        int flag = 0;  // 管理是否需要进位
+        // 从后往前计算（从低位向高位计算），如果一个数字位数不够了则进行补0处理
+        while (i >= 0 || j >= 0){
+            int n1 = i >= 0 ? s.charAt(i) - '0' : 0;
+            int n2 = j >= 0 ? t.charAt(j) - '0' : 0;
+            int sum = n1 + n2 + flag;
+            if (sum >= 10){
+                flag = 1;
+                sum -= 10;
+            }else {
+                flag = 0;
+            }
+            sb.append(sum);
+            i--;
+            j--;
+        }
+        // 对于最后存在进位的情况进行特殊处理
+        if (flag > 0){
+            sb.append(1);
+        }
+
+        return sb.reverse().toString();
+    }
+
+    /**
+     * 给出一个仅包含字符'(',')','{','}','['和']',的字符串，判断给出的字符串是否是合法的括号序列
+     * 括号必须以正确的顺序关闭，"()"和"()[]{}"都是合法的括号序列，但"(]"和"([)]"不合法。
+     *
+     * 思路：使用一个栈存储这些序列的内容，如果遇到左括号就对这个括号进行入栈操作，如果遇到一个右括号。
+     * 就比较这个右括号是否与左括号匹配，如果不能匹配，则返回false
+     */
+    public boolean isValid (String s) {
+        if (s == null || s.length() == 0){
+            return false;
+        }
+        Stack<Character> stack = new Stack<>();
+        for (int i = 0; i < s.length(); i++){
+            char c = s.charAt(i);
+            if (c == '{' || c == '(' || c == '['){
+                stack.push(c);
+            }else if (c == ')'){
+                if (stack.isEmpty() || stack.pop() != '('){
+                    return false;
+                }
+            }else if (c == ']'){
+                if (stack.isEmpty() || stack.pop() != '['){
+                    return false;
+                }
+            }else if (c == '}'){
+                if (stack.isEmpty() || stack.pop() != '{'){
+                    return false;
+                }
+            }else {
+                return false;
+            }
+        }
+        return stack.isEmpty();
     }
 
     /**
