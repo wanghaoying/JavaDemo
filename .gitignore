@@ -1,4 +1,4 @@
 # 自定义忽视策略
-*.class
+/test/out
 .DS_Store
 *.idea
