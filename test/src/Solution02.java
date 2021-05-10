@@ -9,7 +9,228 @@ public class Solution02 {
 
     @Test
     public void test(){
-        System.out.println(LCS("2^3","12^3^2^34"));
+        TreeNode root = new TreeNode(3);
+        root.left = new TreeNode(5);
+        root.right = new TreeNode(1);
+        System.out.println(lowestCommonAncestor(root,5,3));
+    }
+
+    /**
+     * 写出一个程序，接受一个字符串，然后输出该字符串反转后的字符串。（字符串长度不超过1000）
+     *
+     * 思路：1、 使用一个char[] 来存储这些反转后的数据
+     *      2、 使用一个StringBuilder 倒序来向存储这些中间的char
+     */
+    public String solve (String str) {
+        if (str == null || str.length() <= 1){
+            return str;
+        }
+        // 1、使用一个char[] 在做中间变量存储
+//        char[] tmp = new char[str.length()];
+//        for (int i = str.length()-1; i >= 0; i--){
+//            tmp[str.length()-i-1] = str.charAt(i);
+//        }
+//        return new String(tmp);
+
+        // 2、使用一个stringBuilder来进行存储
+        StringBuilder sb = new StringBuilder(str.length());
+        for (int i = str.length()-1; i >= 0; i--){
+            sb.append(str.charAt(i));
+        }
+        return sb.toString();
+    }
+
+    /**
+     * 给定一棵二叉树以及这棵树上的两个节点 o1 和 o2，请找到 o1 和 o2 的最近公共祖先节点。
+     *
+     * 思路：如果当前节点为最近的公共祖先，那么只存在两种情况：
+     *      1、当前这两个数恰好分布在左子树 和 右子树上
+     *      2、其中一个数在左子树上 或者 在右子树上
+     *  如果两个节点都在一个子树上，那么说明最近的公共祖先节点在这个子树上
+     *  如果只有一个节点在某一个子树上，且当前节点的值不等于另一个数字，这说明最近公共祖先节点可能
+     *  在其父节点 或者祖先节点
+     */
+    public int lowestCommonAncestor (TreeNode root, int o1, int o2) {
+        if (root == null){
+            return Integer.MIN_VALUE;
+        }
+        // 采用递归的方式来进行计算
+        int l1 = lowestCommonAncestor(root.left, o1, o2);
+        int l2 = lowestCommonAncestor(root.right, o1, o2);
+
+        // 刚好两个数字在两个子树上
+        if (l1 > Integer.MIN_VALUE && l2 > Integer.MIN_VALUE){
+            return root.val;
+        }
+
+        if (l1 > Integer.MIN_VALUE || l2 > Integer.MIN_VALUE){
+            // root为最近公共祖先的另一种情况
+            if (root.val == o1 || root.val == o2){
+                return root.val;
+            }
+            // 其他情况将其向上抛出
+            if (l1 > Integer.MIN_VALUE){
+                return l1;
+            }
+            return l2;
+        }
+        // 两个子树上都没有这两个数字，但是root.val等于其中一个
+        if (l1 == Integer.MIN_VALUE && l2 == Integer.MIN_VALUE ){
+            if (root.val == o1 || root.val == o2){
+                return root.val;
+            }
+        }
+        return Integer.MIN_VALUE;
+    }
+
+    /**
+     * 假设链表中每一个节点的值都在 0 - 9 之间，那么链表整体就可以代表一个整数。
+     * 给定两个这种链表，请生成代表两个整数相加值的结果链表。
+     * 例如：链表 1 为 9->3->7，链表 2 为 6->3，最后生成新的结果链表为 1->0->0->0。
+     *
+     * 思路：这两个链表的顺序都是按照自然数的顺序进行链接起来的，但是存在一个问题，就是我们计算的
+     * 时候，需要首先计算低位的，但是低位的数字在链表的尾部位置，计算完之后再计算前一个节点的，
+     * 但是我们这是个单向链表，那么就只能再从头遍历，这样的效率就是十分低下的
+     *
+     * 所以我们采用的是将两个链表进行翻转，计算完成之后，再将最后的结果集进行翻转
+     */
+    public ListNode addInList (ListNode head1, ListNode head2) {
+        // 对特殊情况进行判断
+        if (head1 == null){
+            return head2;
+        }
+        if (head2 == null){
+            return head1;
+        }
+        // 对head1 和 head2 进行翻转
+        head1 = reverseList(head1);
+        head2 = reverseList(head2);
+
+        // 声明一个变量来暂存是否需要进位
+        int flag = 0, sum = 0;
+        ListNode newHead = new ListNode(0);
+        ListNode p = newHead;
+
+        // 计算翻转后的两个链表的计算结果
+        while (head1 != null || head2 != null){
+            int n1 = head1 != null ? head1.val : 0;
+            int n2 = head2 != null ? head2.val : 0;
+
+            sum = n1 + n2 + flag;
+            if (sum >= 10){
+                flag = 1;
+                p.next = new ListNode(sum-10);
+            }else {
+                flag = 0;
+                p.next = new ListNode(sum);
+            }
+            p = p.next;
+
+            head1 = head1 != null ? head1.next : null;
+            head2 = head2 != null ? head2.next : null;
+        }
+        // 查看是否需要最终的进位
+        if (flag == 1){
+            p.next = new ListNode(1);
+            p = p.next;
+        }
+
+        return reverseList(newHead.next);
+    }
+    // 对一个链表进行翻转，传入的是链表的头结点
+    private ListNode reverseList(ListNode list){
+        if (list == null){
+            return null;
+        }
+        ListNode prev = null, tmp = null;
+        while (list != null){
+            tmp = list.next;
+            list.next = prev;
+            prev = list;
+            list = tmp;
+        }
+        return prev;
+    }
+
+    /**
+     * 输入两个无环的单链表，找出它们的第一个公共结点。（注意因为传入数据是链表，
+     * 所以错误测试数据的提示是用其他方式显示的，保证传入数据是正确的）
+     *
+     * 思路：假设链表1的其实节点为A， 链表2的起始节点为B， 他们的第一个公共节点为C，最后一个节点为
+     * D(如果没有公共节点，那么C和D为null);
+     * 那么如果从长度方面来进行考虑的话， AC + CD + BC = BC + CD + AC
+     * 即：使用两个指针分别从A和B开始走，如果走到结尾了，那么就跳到另外一个链表的起始位置继续行走
+     */
+    public ListNode FindFirstCommonNode(ListNode pHead1, ListNode pHead2) {
+        if (pHead1 == null || pHead2 == null){
+            return null;
+        }
+        // 声明两个指针
+        ListNode p1 = pHead1, p2 = pHead2;
+        while (p1 != p2){
+            p1 = p1 != null ? p1.next : pHead2;
+            p2 = p2 != null ? p2.next : pHead1;
+        }
+        return p1;
+    }
+
+    /**
+     * 给定一个二叉树，返回该二叉树的之字形层序遍历，（第一层从左向右，下一层从右向左，一直这样交替）
+     * 例如：
+     * 给定的二叉树是{3,9,20,#,#,15,7}
+     *
+     * 该二叉树之字形层序遍历的结果是:[[3],[20,9],[15,7]]
+     *
+     * 思路：对二叉树进行”之“字型遍历，关键在于对下层节点的输入顺序的方式，所以使用一个双端队列
+     * 来完成这个任务
+     * 首先对于需要从右往左遍历：
+     *        在遍历上一层节点的时候，对他们的子节点采用从右端插入，先插入左子节点，在插入右子节点
+     *        然后读的时候从右向左读
+     * 对于需要从左向右遍历的层：
+     *        在遍历上一层节点的时候，对于他们的子节点采用从左端插入，先插入右子节点，在插入左子节点
+     *        然后读的时候从左向右读
+     */
+    public ArrayList<ArrayList<Integer>> zigzagLevelOrder (TreeNode root) {
+        if (root == null){
+            return  new ArrayList<>();
+        }
+        // 声明一个双端队列 和 最终的结果存储容器 以及一个标志位代表当前是从左向右还是从右向左
+        ArrayList<ArrayList<Integer>> res = new ArrayList<>();
+        Deque<TreeNode> deque = new LinkedList<>();
+        boolean flag = false;   // false flags left -> right
+        deque.offerFirst(root);
+
+        // 对双端队列中的元素进行遍历
+        while (!deque.isEmpty()){
+            // 为每一层声明一个ArrayList
+            ArrayList<Integer> arrayList = new ArrayList<>();
+            for (int i = deque.size(); i > 0; i--){
+                if (!flag){
+                    // left -> right
+                    TreeNode t = deque.pollFirst();
+                    arrayList.add(t.val);
+                    if (t.left != null){
+                        deque.offerLast(t.left);
+                    }
+                    if (t.right != null){
+                        deque.offerLast(t.right);
+                    }
+                }else {
+                    // right -> left
+                    TreeNode t = deque.pollLast();
+                    arrayList.add(t.val);
+                    if (t.right != null){
+                        deque.offerFirst(t.right);
+                    }
+                    if (t.left != null){
+                        deque.offerFirst(t.left);
+                    }
+                }
+            }
+            flag = !flag;
+            res.add(arrayList);
+        }
+        return res;
     }
 
     /**
