@@ -9,10 +9,199 @@ public class Solution02 {
 
     @Test
     public void test(){
-        TreeNode root = new TreeNode(3);
-        root.left = new TreeNode(5);
-        root.right = new TreeNode(1);
-        System.out.println(lowestCommonAncestor(root,5,3));
+        System.out.println(getLongestPalindrome("baabccc",7));
+    }
+
+    /**
+     * 给定数组arr，设长度为n，输出arr的最长递增子序列。
+     * （如果有多个答案，请输出其中字典序最小的）
+     *
+     * 例：[2,1,5,3,6,4,8,9,7]   [1,3,4,8,9]
+     *
+     * 思路：
+     *
+     */
+    public int[] LIS (int[] arr) {
+        // write code here
+        return arr;
+    }
+
+    /**
+     * 对于一个字符串，请设计一个高效算法，计算其中最长回文子串的长度。
+     * 给定字符串A以及它的长度n，请返回最长回文子串的长度。
+     *
+     * 思路：
+     * 1、中心拓展算法：对于每个字符串，对于其每一个字符都作为一个中心，然后向两边进行拓展，
+     * 比对他两边的字符是否相同，时间复杂度为O(n^2)
+     *
+     * 2、马拉车算法：在使用中心拓展算法的时候，时间复杂度为O(n^2)
+     * 算法的核心思想是：
+     * I、对于一个回文串，其中心为center，其半径为r，对于在其右侧半径上的一个位置j，其对应在
+     * 左侧位置上的位置为i
+     * II、如果位置i处的回文子串的半径没有掉出center-r，即i-r_i > center-r，那么j位置上的
+     * 回文子串的长度和i位置上的一样，但是如果i-r_i <= center-r,那么j位置上的长度可能就比i
+     * 位置上的要长一些，需要重新计算
+     *
+     */
+    public int getLongestPalindrome(String A, int n) {
+        if (A == null || A.length() <= 1){
+            return n;
+        }
+        int maxLength = 0;
+        char[] tmp = A.toCharArray();
+
+        // 1、中心拓展算法
+//        for (int i = 0; i < n; i++){
+//            // 以当前的chars[i] 为中心，向两边进行拓展
+//            // 但是存在一个问题 对于 abba这样的回文串是判断不出来的
+//            int len = 1;
+//            int p = i-1, q = i+1;
+//            while (p >= 0 && q <= n-1 && chars[p] == chars[q]){
+//                p--;
+//                q++;
+//                len += 2;
+//            }
+//            maxLength = Math.max(maxLength,len);
+//
+//            // 对于abba这样的回文串进行判断
+//            len = 0;
+//            p = i;
+//            q = i+1;
+//            while (p >= 0 && q <= n-1 && chars[p] == chars[q]){
+//                p--;
+//                q++;
+//                len += 2;
+//            }
+//            maxLength = Math.max(maxLength,len);
+//        }
+
+        // 2、马拉车算法
+        // 对char数组进行#填充，这样可以避免回文字符串的长度是奇数和偶数的讨论
+        char[] chars = new char[2*tmp.length+1];
+        chars[0] = '#';
+        for (int i = 1; i <= tmp.length; i++){
+            chars[2*i-1] = tmp[i-1];
+            chars[2*i] = '#';
+        }
+
+        // 声明一些变量，当前的中心位置center，中心半径r，和当前要计算的位置j
+        int center = -1, r = 0;
+        // 声明一个数组来存储每个位置上的回文串半径，也可以认为是去除掉#后回文串的长度
+        int[] chars_r = new int[chars.length];
+
+        for (int i = 0; i < chars.length; i++){
+            if (i-center > r){
+                int r_i = 0;
+                int p = i-1, q = i+1;
+                while (p >= 0 && q < chars.length && chars[p] == chars[q]){
+                    r_i++;
+                    p--;
+                    q++;
+                }
+                chars_r[i] = r_i;
+
+                if (i+chars_r[i] > center+r){
+                    center = i;
+                    r = chars_r[i];
+                }
+            }else {
+                int j = 2*center-i;
+                if (j-chars_r[j] > center-r){
+                    chars_r[i] = chars_r[j];
+                }else {
+                    int r_i = center+r-i;
+                    int p = i-r_i-1, q = i+r_i+1;
+                    while (p >= 0 && q < chars.length && chars[p] == chars[q]){
+                        r_i++;
+                        p--;
+                        q++;
+                    }
+                    chars_r[i] = r_i;
+                    if (i+chars_r[i] > center+r){
+                        center = i;
+                        r = chars_r[i];
+                    }
+                }
+            }
+            maxLength = Math.max(maxLength,r);
+        }
+
+        return maxLength;
+    }
+
+    /**
+     * 大家都知道斐波那契数列，现在要求输入一个整数n，请你输出斐波那契数列的第n项（
+     * 从0开始，第0项为0，第1项是1）。其中n≤39
+     *
+     * 思路：斐波那契数列的递归公式如下 f(n) = f(n-1) + f(n-2)
+     */
+    public int Fibonacci(int n) {
+        if (n <= 0){
+            return 0;
+        }
+
+        int p = 0, q = 1,t = 0;
+        for (int i = 1; i < n; i++){
+            t = q;
+            q = p+q;
+            p = t;
+        }
+        return q;
+    }
+
+    /**
+     * 给定一个m x n大小的矩阵（m行，n列），按螺旋的顺序返回矩阵中的所有元素。
+     *
+     * 思路：这个矩阵打印的顺序是顺时针的顺序，所以只能先从左向右，然后从上向下，从右向左，从下向上
+     * 而且每当完成最外面圈的遍历的时候，新的矩阵的高度和宽度 均需要减2
+     */
+    public ArrayList<Integer> spiralOrder(int[][] matrix) {
+        // 对matrix为空的情况进行判定
+        if (matrix == null || matrix.length == 0 || matrix[0].length == 0){
+            return new ArrayList<>();
+        }
+        // 获取matrix数组的边界
+        int up = 0, down = matrix.length;
+        int left = 0, right = matrix[0].length;
+        ArrayList<Integer> arrayList = new ArrayList<>();
+
+        while (up < down && left < right){
+            int i = up, j = left;
+            // 从左向右遍历
+            while (j < right){
+                arrayList.add(matrix[i][j++]);
+            }
+            up++;
+            i++;
+            j--;
+            if (up >= down){
+                break;
+            }
+            // 从上向下遍历
+            while (i < down){
+                arrayList.add(matrix[i++][j]);
+            }
+            right--;
+            j--;
+            i--;
+            if (left >= right){
+                break;
+            }
+            // 从右向左遍历
+            while (j >= left){
+                arrayList.add(matrix[i][j--]);
+            }
+            down--;
+            i--;
+            j++;
+            // 从下往上遍历
+            while (i >= up){
+                arrayList.add(matrix[i--][j]);
+            }
+            left++;
+        }
+
+        return arrayList;
     }
 
     /**
