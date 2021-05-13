@@ -9,7 +9,62 @@ public class Solution02 {
 
     @Test
     public void test(){
-        System.out.println(getLongestPalindrome("baabccc",7));
+        System.out.println(threeSum(new int[] {0,0,0,0}));
+    }
+
+    /**
+     * 给出一个有n个元素的数组S，S中是否有元素a,b,c满足a+b+c=0？找出数组S中所有满足条件的三元组。
+     * 注意：
+     *      三元组（a、b、c）中的元素必须按非降序排列。（即a≤b≤c）
+     *      解集中不能包含重复的三元组。
+     *
+     * 思路：首先对这个num数组进行排序，然后使用三个指针分别指向三个位置
+     */
+    public ArrayList<ArrayList<Integer>> threeSum(int[] num) {
+        if (num == null || num.length == 0){
+            return new ArrayList<>();
+        }
+        // 先对num进行一次排序
+        Arrays.sort(num);
+
+        // 声明一个结果变量
+        ArrayList<ArrayList<Integer>> arrayLists = new ArrayList<>();
+
+        int i = 0;
+        while (i < num.length-2){
+            if (i > 0 ){
+                while (i < num.length-2 && num[i] == num[i-1]){
+                    i++;
+                }
+            }
+            if (num[i] > 0){
+                break;
+            }
+            int j = i+1, k = num.length-1;
+            while (j < k){
+                if (num[i] + num[j] + num[k] == 0){
+                    ArrayList<Integer> tmp = new ArrayList<>();
+                    tmp.add(num[i]);
+                    tmp.add(num[j]);
+                    tmp.add(num[k]);
+                    arrayLists.add(tmp);
+                    j++;
+                    while (j < num.length && num[j] == num[j-1]){
+                        j++;
+                    }
+                    k--;
+                    while (k >= 0 && num[k] == num[k+1]){
+                        k--;
+                    }
+                }else if (num[i] + num[j] + num[k] > 0){
+                    k--;
+                }else {
+                    j++;
+                }
+            }
+            i++;
+        }
+        return arrayLists;
     }
 
     /**
@@ -18,12 +73,118 @@ public class Solution02 {
      *
      * 例：[2,1,5,3,6,4,8,9,7]   [1,3,4,8,9]
      *
-     * 思路：
+     * 1、使用回溯法（dfs）：
+     *  对于每一个位置上的数字，考虑是否加入到最终的结果集中，获取都这个数组
+     *  能产生的所有的递增子序列，然后从其中选择出字典序最小的最长的递增子序列
+     *  但是这个方法的时间复杂度很高，空间复杂度也很高，时间复杂度为O(2^n)
+     *
+     * 2、动态规划：
+     *   上面的问题中，存在很多的重复子问题的计算，我们可以这么考虑：
+     *   对于后面加进来的一个数字，以这个数字为结尾的最长子序列中，这个数字一定是最大的，前面的
+     *   所有数字，都应该比这个数字小
+     *   我们设置一个状态表，dp[arr.length]，其中dp[i]的值为以arr[i]为结尾的最长子序列的长度
+     *   dp[i] = max(dp[k1],dp[k2],...,dp[kn])+1
+     *          其中 k1, k2, ..., kn满足 arr[k_i] < arr[i]
+     *   同时因为要返回最长递增子序列，我们还需要一个状态表来保存使得dp[i]最大的那个节点的索引
+     *   因为要求相同长度按照字典序排列，那么低于同时满足使得dp[i]最大的索引位置，选用arr[k]最小的
+     *   这样时间复杂度为 O(n^2),空间复杂度为o(n)
+     *   但是仍然超出时间限制
+     *
+     * 3、动态规划+二分查找
+     *   上面方法2中存在的问题主要在于，做下面这一步骤的时候是时间复杂度是O(n)的
+     *   dp[i] = max(dp[k1],dp[k2],...,dp[kn])+1
+     *          其中 k1, k2, ..., kn满足 arr[k_i] < arr[i]
+     *    所以如果要改进时间复杂度的话，应该关注点主要在于实现一个更短时间复杂度的一个查找
+     *    根据常用的查找方案，能降低时间复杂度的是二分查找，但是二分查找需要保证的是被查找的
+     *    数组中的元素是排序好的，然而我们的dp数组 index数据都是乱序的，所以需要考虑如果够高一个
+     *    排序的数组
+     *
+     *    基于上面的思考：我们最终的目的是找到一个尽可能长的子序列，而且要保证这个子序列的最后一个
+     *    元素要小于当前的数字，所以我们可以尝试构建下面这个数组：
+     *    length[], length[i]代表长度为i的递增子序列的最后一个元素在arr[]中的索引位置
+     *    当有多个长度为i的递增子序列时，选择最后一个元素小的
+     *
+     *    这样就可以通过二分查找来找到合适的索引，如果arr[length[i]] > 当前元素值，那么目标
+     *    的位置一定在length中的i的左边，反之右边
      *
      */
     public int[] LIS (int[] arr) {
-        // write code here
-        return arr;
+        if (arr == null || arr.length <= 1){
+            return arr;
+        }
+        // 初始化状态表和索引位置表
+//        int[] dp = new int[arr.length];
+//        Arrays.fill(dp,1);
+        int[] index = new int[arr.length];
+        Arrays.fill(index,-1);
+        int[] length = new int[arr.length];
+        Arrays.fill(length,-1);
+
+        // 填充状态表和索引位置表信息
+        for (int i = 0; i < arr.length; i++){
+            // 1、 动态规划
+//            for (int j = 0; j <= i; j++){
+//                if (arr[j] < arr[i]){
+//                    if (dp[j]+1 > dp[i]){
+//                        dp[i] = dp[j]+1;
+//                        index[i] = j;
+//                    }else if (dp[j]+1 == dp[i]){
+//                        if (arr[j] < arr[index[i]]){
+//                            dp[i] = dp[j]+1;
+//                            index[i] = j;
+//                        }
+//                    }
+//                }
+//            }
+            // 2、动态规划 + 二分查找
+            int left = 0, right = i-1, mid = 0, len =1;
+            // 二分查找到应该插入的位置
+            while (left <= right){
+                mid = (left+right)/2;
+                if (length[mid] == -1){
+                    right = mid-1;
+                }else if (arr[i] > arr[length[mid]]){
+                    left = mid+1;
+                }else {
+                    right = mid-1;
+                }
+            }
+            // 更新状态表
+            if (left > 0){
+                len = left+1;
+                index[i] = length[left-1];
+            }
+            if (length[len-1] == -1 || arr[length[len-1]] > arr[i]){
+                length[len-1] = i;
+            }
+        }
+
+        // 获取最长的递增子序列的最后一个元素的位置
+        int maxLength = 1, inx = 0;
+        for (int i = length.length-1; i >= 0; i--){
+           if (length[i] != -1){
+               maxLength = i+1;
+               inx = length[i];
+               break;
+           }
+        }
+
+        // 获取最长的递增子序列的位置
+//        int maxLength = 1, inx = 0;
+//        for (int i = 0; i < dp.length; i++){
+//            if (dp[i] > maxLength){
+//                maxLength = dp[i];
+//                inx = i;
+//            }
+//        }
+
+        // 产生最后的结果集
+        int[] res = new int[maxLength];
+        while (inx != -1){
+            res[--maxLength] = arr[inx];
+            inx = index[inx];
+        }
+        return res;
     }
 
     /**
