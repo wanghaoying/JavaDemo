@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="/test/show" method="post">
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+    用户名：<input type="text" name="username" />
+    密码：  <input type="text" name="password" />
+    <input type="checkbox" name="remember-me"> 记住我
+    <input type="submit" value="登录">
+</form>
+</body>
+</html>

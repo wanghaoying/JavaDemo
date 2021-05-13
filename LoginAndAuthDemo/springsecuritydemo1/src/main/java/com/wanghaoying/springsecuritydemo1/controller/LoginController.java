@@ -1,28 +1,27 @@
 package com.wanghaoying.springsecuritydemo1.controller;
 
-import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.wanghaoying.springsecuritydemo1.pojo.Sys_user;
-import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.access.prepost.PostAuthorize;
-import org.springframework.security.access.prepost.PostFilter;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.access.prepost.PreFilter;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@RestController
-@RequestMapping("user/login")
+@Controller
+@RequestMapping("/user")
 public class LoginController {
+    @GetMapping("login")
+    public String login(){
+        return "/html/login/login";
+    }
 
     @GetMapping("hello")
     public String hello(){
         return "hello world";
     }
 
-    @PostMapping("index")
-    public String index(Model model){
+    @GetMapping("index")
+    public String index(){
         return "hello index";
     }
 
