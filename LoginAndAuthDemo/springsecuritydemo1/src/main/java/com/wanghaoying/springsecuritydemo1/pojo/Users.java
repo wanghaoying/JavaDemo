@@ -1,25 +1,25 @@
 package com.wanghaoying.springsecuritydemo1.pojo;
 
-public class Sys_user {
-    private String username;
+public class Users {
+    private String userName;
     private String password;
     private String email;
 
-    public Sys_user() {
+    public Users() {
     }
 
-    public Sys_user(String username, String password, String email) {
-        this.username = username;
+    public Users(String username, String password, String email) {
+        this.userName = username;
         this.password = password;
         this.email = email;
     }
 
     public String getUsername() {
-        return username;
+        return userName;
     }
 
     public void setUsername(String username) {
-        this.username = username;
+        this.userName = username;
     }
 
     public String getPassword() {
@@ -41,7 +41,7 @@ public class Sys_user {
     @Override
     public String toString() {
         return "Users{" +
-                "username='" + username + '\'' +
+                "username='" + userName + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
                 '}';

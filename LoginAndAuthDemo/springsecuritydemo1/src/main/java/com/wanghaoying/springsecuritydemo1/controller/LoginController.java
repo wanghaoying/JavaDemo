@@ -1,6 +1,6 @@
 package com.wanghaoying.springsecuritydemo1.controller;
 
-import com.wanghaoying.springsecuritydemo1.pojo.Sys_user;
+import com.wanghaoying.springsecuritydemo1.pojo.Users;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,10 +41,10 @@ public class LoginController {
 //                                        // 只返回username为wanghao的元素
 //    @PreFilter("filterObject.username=='wanghao'")  // 对方法输入的参数进行过滤
 //                                          // 只允许username为wanghao的请求进入方法
-    public List<Sys_user> getAll(@RequestBody List<Sys_user> list){
-        ArrayList<Sys_user> sys_users = new ArrayList<>();
-        sys_users.add(new Sys_user("wanghao","",""));
-        sys_users.add(new Sys_user("admin","",""));
-        return sys_users;
+    public List<Users> getAll(@RequestBody List<Users> list){
+        ArrayList<Users> users = new ArrayList<>();
+        users.add(new Users("wanghao","",""));
+        users.add(new Users("admin","",""));
+        return users;
     }
 }

@@ -2,66 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="970689e3-fb52-4195-987c-0d0fb329242c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LoginAndAuthDemo/springsecuritydemo1/src/main/java/com/wanghaoying/springsecuritydemo1/Springsecuritydemo1Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/../LoginAndAuthDemo/springsecuritydemo1/src/main/java/com/wanghaoying/springsecuritydemo1/Springsecuritydemo1Application.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LoginAndAuthDemo/springsecuritydemo1/src/main/java/com/wanghaoying/springsecuritydemo1/controller/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../LoginAndAuthDemo/springsecuritydemo1/src/main/java/com/wanghaoying/springsecuritydemo1/controller/LoginController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LoginAndAuthDemo/springsecuritydemo1/src/main/java/com/wanghaoying/springsecuritydemo1/dao/MySecurityMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/../LoginAndAuthDemo/springsecuritydemo1/src/main/java/com/wanghaoying/springsecuritydemo1/dao/MySecurityMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LoginAndAuthDemo/springsecuritydemo1/src/main/java/com/wanghaoying/springsecuritydemo1/pojo/Sys_user.java" beforeDir="false" afterPath="$PROJECT_DIR$/../LoginAndAuthDemo/springsecuritydemo1/src/main/java/com/wanghaoying/springsecuritydemo1/pojo/Users.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LoginAndAuthDemo/springsecuritydemo1/src/main/java/com/wanghaoying/springsecuritydemo1/service/MySecurityService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../LoginAndAuthDemo/springsecuritydemo1/src/main/java/com/wanghaoying/springsecuritydemo1/service/MySecurityService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/test/Heap.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/test/JavaTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/test/test/JavaTest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/test/MaxQueue.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/test/MinStack.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/test/Solution$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/test/Solution$ListNode.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/test/Solution$Node.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/test/Solution$RandomListNode.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/test/Solution$TreeNode.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/test/Solution.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/test/Solution01$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/test/Solution01$ListNode.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/test/Solution01$Node.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/test/Solution01$TreeLinkNode.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/test/Solution01$TreeNode.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/test/Solution01.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/test/Solution02$Heap.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/test/Solution02$LRUStruct.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/test/Solution02$ListNode.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/test/Solution02$TreeNode.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/test/Solution02.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/test/ali/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/test/test/ali/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/test/ali/Main01.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/test/test/ali/Main01.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/test/ali/Main02.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/test/test/ali/Main02.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/test/ali/TestThread.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/test/test/ali/TestThread.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/test/baidu/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/test/test/baidu/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/test/baidu/Main02.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/test/test/baidu/Main02.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/test/baidu/Main03.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/test/test/baidu/Main03.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/test/huawei/Main$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/test/test/huawei/Main$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/test/huawei/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/test/test/huawei/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/test/huawei/Main02.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/test/test/huawei/Main02.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/test/huawei/Main03.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/test/test/huawei/Main03.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/test/huawei/Main04.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/test/test/huawei/Main04.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/test/huawei/Main05.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/test/test/huawei/Main05.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/test/meituan/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/test/test/meituan/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/test/meituan/Main02.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/test/test/meituan/Main02.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/test/meituan/Main03.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/test/test/meituan/Main03.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/test/meituan/Main04.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/test/test/meituan/Main04.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/test/meituan/Main05.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/test/test/meituan/Main05.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/test/meituan/Main06.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/test/test/meituan/Main06.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/test/tencent/ListNode.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/test/test/tencent/ListNode.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/test/tencent/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/test/test/tencent/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/test/tencent/Main02.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/test/test/tencent/Main02.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/test/tencent/Main03$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/test/test/tencent/Main03$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/test/tencent/Main03.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/test/test/tencent/Main03.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/test/tencent/Main05.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/test/test/tencent/Main05.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/test/tencent/Mian04.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/test/test/tencent/Mian04.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/test/threeSixZero/Dijstra.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/test/test/threeSixZero/Dijstra.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/test/threeSixZero/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/test/test/threeSixZero/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/test/threeSixZero/Main01.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/test/test/threeSixZero/Main01.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/test/yuanfudao/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/test/test/yuanfudao/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/test/yuanfudao/Main02.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/test/test/yuanfudao/Main02.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/test/zhanhang/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/test/test/zhanhang/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/test/zhanhang/Main02.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/test/test/zhanhang/Main02.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Solution.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/nowcoder/Solution.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Solution01.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/nowcoder/Solution01.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Solution02.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/nowcoder/Solution02.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/test/test/nowcoder/Solution03$TreeNode.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/test/test/nowcoder/Solution03$TreeNode.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/test/test/nowcoder/Solution03.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/test/test/nowcoder/Solution03.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/nowcoder/Solution03.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/nowcoder/Solution03.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -151,7 +100,8 @@
       <workItem from="1620634832908" duration="175000" />
       <workItem from="1620694017421" duration="14864000" />
       <workItem from="1620782504324" duration="24511000" />
-      <workItem from="1620876541583" duration="10144000" />
+      <workItem from="1620876541583" duration="10282000" />
+      <workItem from="1620956900814" duration="6652000" />
     </task>
     <servers />
   </component>
@@ -167,46 +117,46 @@
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state x="533" y="184" key="#com.intellij.ide.util.MemberChooser/0.23.1440.877@0.23.1440.877" timestamp="1620892549620" />
-    <state width="1398" height="230" key="GridCell.Tab.0.bottom" timestamp="1620905172606">
+    <state width="1398" height="230" key="GridCell.Tab.0.bottom" timestamp="1620972561297">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state width="1877" height="348" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1620819993447" />
-    <state width="1398" height="230" key="GridCell.Tab.0.bottom/0.23.1440.877@0.23.1440.877" timestamp="1620905172606" />
-    <state width="1398" height="230" key="GridCell.Tab.0.center" timestamp="1620905172604">
+    <state width="1398" height="230" key="GridCell.Tab.0.bottom/0.23.1440.877@0.23.1440.877" timestamp="1620972561297" />
+    <state width="1398" height="230" key="GridCell.Tab.0.center" timestamp="1620972561296">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state width="1877" height="348" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1620819993447" />
-    <state width="1398" height="230" key="GridCell.Tab.0.center/0.23.1440.877@0.23.1440.877" timestamp="1620905172604" />
-    <state width="1398" height="230" key="GridCell.Tab.0.left" timestamp="1620905172603">
+    <state width="1398" height="230" key="GridCell.Tab.0.center/0.23.1440.877@0.23.1440.877" timestamp="1620972561296" />
+    <state width="1398" height="230" key="GridCell.Tab.0.left" timestamp="1620972561295">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state width="1877" height="348" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1620819993447" />
-    <state width="1398" height="230" key="GridCell.Tab.0.left/0.23.1440.877@0.23.1440.877" timestamp="1620905172603" />
-    <state width="1398" height="230" key="GridCell.Tab.0.right" timestamp="1620905172605">
+    <state width="1398" height="230" key="GridCell.Tab.0.left/0.23.1440.877@0.23.1440.877" timestamp="1620972561295" />
+    <state width="1398" height="230" key="GridCell.Tab.0.right" timestamp="1620972561296">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state width="1877" height="348" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1620819993447" />
-    <state width="1398" height="230" key="GridCell.Tab.0.right/0.23.1440.877@0.23.1440.877" timestamp="1620905172605" />
-    <state width="1398" height="285" key="GridCell.Tab.1.bottom" timestamp="1620905120366">
+    <state width="1398" height="230" key="GridCell.Tab.0.right/0.23.1440.877@0.23.1440.877" timestamp="1620972561296" />
+    <state width="1398" height="285" key="GridCell.Tab.1.bottom" timestamp="1620905328363">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state width="1877" height="348" key="GridCell.Tab.1.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1620819993447" />
-    <state width="1398" height="285" key="GridCell.Tab.1.bottom/0.23.1440.877@0.23.1440.877" timestamp="1620905120366" />
-    <state width="1398" height="285" key="GridCell.Tab.1.center" timestamp="1620905120365">
+    <state width="1398" height="285" key="GridCell.Tab.1.bottom/0.23.1440.877@0.23.1440.877" timestamp="1620905328363" />
+    <state width="1398" height="285" key="GridCell.Tab.1.center" timestamp="1620905328362">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state width="1877" height="348" key="GridCell.Tab.1.center/0.0.1920.1040@0.0.1920.1040" timestamp="1620819993447" />
-    <state width="1398" height="285" key="GridCell.Tab.1.center/0.23.1440.877@0.23.1440.877" timestamp="1620905120365" />
-    <state width="1398" height="285" key="GridCell.Tab.1.left" timestamp="1620905120365">
+    <state width="1398" height="285" key="GridCell.Tab.1.center/0.23.1440.877@0.23.1440.877" timestamp="1620905328362" />
+    <state width="1398" height="285" key="GridCell.Tab.1.left" timestamp="1620905328361">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state width="1877" height="348" key="GridCell.Tab.1.left/0.0.1920.1040@0.0.1920.1040" timestamp="1620819993447" />
-    <state width="1398" height="285" key="GridCell.Tab.1.left/0.23.1440.877@0.23.1440.877" timestamp="1620905120365" />
-    <state width="1398" height="285" key="GridCell.Tab.1.right" timestamp="1620905120366">
+    <state width="1398" height="285" key="GridCell.Tab.1.left/0.23.1440.877@0.23.1440.877" timestamp="1620905328361" />
+    <state width="1398" height="285" key="GridCell.Tab.1.right" timestamp="1620905328362">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state width="1877" height="348" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1620819993447" />
-    <state width="1398" height="285" key="GridCell.Tab.1.right/0.23.1440.877@0.23.1440.877" timestamp="1620905120366" />
+    <state width="1398" height="285" key="GridCell.Tab.1.right/0.23.1440.877@0.23.1440.877" timestamp="1620905328362" />
     <state x="704" y="221" key="RollbackChangesDialog" timestamp="1620469441246">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

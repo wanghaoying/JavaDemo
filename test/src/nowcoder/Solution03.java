@@ -2,6 +2,8 @@ package nowcoder;
 
 import org.junit.Test;
 
+import java.util.*;
+
 /**
  * 刷题的第四个文件，NC12 ~ NC
  */
@@ -12,7 +14,173 @@ public class Solution03 {
 
     @Test
     public void test(){
-        System.out.println(search(new int[] {1}, 0));
+        System.out.println(maxProfit(new int[] {1,4,2}));
+    }
+
+    /**
+     * 假设你有一个数组，其中第 i 个元素是股票在第 i 天的价格。
+     * 你有一次买入和卖出的机会。（只有买入了股票以后才能卖出）。
+     * 请你设计一个算法来计算可以获得的最大收益。
+     *
+     * 思路：
+     *      收益最大 = 价格差最大，理想情况下，最低价格之后有个最高价格
+     *      可以维护一个最小价格的变量，该变量表示的是：到当前位置i之前，所有的
+     *  价格中，最低的那个，时间复杂度为o(n)
+     */
+    public int maxProfit (int[] prices) {
+        // 对特殊情况进行判断
+        if (prices == null || prices.length == 0){
+            return 0;
+        }
+
+        int min = prices[0], profit = 0;
+        for (int i = 0; i < prices.length; i++) {
+            if (prices[i] < min){
+                min = prices[i];
+            }else {
+                profit = Math.max(profit, prices[i]-min);
+            }
+        }
+        return profit;
+    }
+
+    /**
+     * 根据二叉树的前序遍历，中序遍历恢复二叉树，并打印出二叉树的右视图
+     *
+     * 思路：
+     *      1、首先对根据二叉树的前序 和 中序遍历 重建这个二叉树
+     *   然后层序遍历这个二叉树，每次选用最右边的数字
+     */
+    public int[] solve (int[] xianxu, int[] zhongxu) {
+        // 构建二叉树
+        TreeNode root = reConstructBinaryTree(xianxu, zhongxu);
+        if (root == null){
+            return new int[] {};
+        }
+        // 声明存储层序遍历的quque 和 存储结果的array
+        Queue<TreeNode> queue = new LinkedList<>();
+        List<Integer> list = new ArrayList<>();
+        queue.offer(root);
+        // 遍历获取右视图的结果
+        while (!queue.isEmpty()){
+            int n = queue.size();
+            for (int i = queue.size(); i > 0; i--){
+                TreeNode t = queue.poll();
+                if (i == 1){
+                    list.add(t.val);
+                }
+                if (t.left != null){
+                    queue.offer(t.left);
+                }
+                if (t.right != null){
+                    queue.offer(t.right);
+                }
+            }
+        }
+        // 将结果转换成int[]
+        int[] res = new int[list.size()];
+        for (int i = 0; i < list.size(); i++) {
+            res[i] = list.get(i);
+        }
+        return res;
+    }
+
+
+    /**
+     * 给定一个整形数组arr，已知其中所有的值都是非负的，将这个数组看作一个容器，
+     * 请返回容器能装多少水。
+     *
+     * 思路：
+     *      1、我们将这个数组可以看成一个容器，那么基于木桶理论，容器能装多少水
+     *  取决于容器中最短的那个部分
+     *      2、我们可以使用双指针，一个指向数组的起始位置，另一个指向数组的尾部
+     *  位置，那么形成的容器的装水量，就由小的那个数字决定，然后移动这个数组，找到
+     *  一个比另一个数字大的位置，同时计算其每个位置上的装水量，然后继续移动数值较小
+     *  的数字
+     */
+    public long maxWater (int[] arr) {
+        // 对特殊情况进行判断
+        if (arr == null || arr.length <= 2){
+            return 0;
+        }
+        // 声明首尾指针，以及结果存储变量
+        int left = 0, right = arr.length-1;
+        int leftMax = arr[left], rightMax = arr[right];
+        long res = 0;
+        while (left < right){
+            res += leftMax - arr[left];
+            res += rightMax - arr[right];
+            // 移动指针
+            if (arr[left] <= arr[right]){
+                left++;
+                leftMax = Math.max(leftMax,arr[left]);
+            }else {
+                right--;
+                rightMax = Math.max(rightMax,arr[right]);
+            }
+        }
+        return res;
+    }
+
+    /**
+     * 实现一个特殊功能的栈，在实现栈的基本功能的基础上，再实现返回栈中最小元素的操作。
+     *
+     * 思路：
+     *      1、要实现一个能返回当前栈中最小元素的功能，当我们向栈中push一个新的元素的之后，
+     *   栈中的最小的元素，取决于之前的最小元素和当前元素的比较，如果当前元素小于之前的
+     *   最小元素，那么当前的最小元素就是新push进来的这个元素，否则还是之前的。
+     *      2、基于上面的思想，我们可以额外使用一个栈，来存储每个元素插入后，对应的当前栈中
+     *   最小的元素，每个需要返回栈中最小元素的时候，就直接返回这个栈的栈顶元素，时间复杂度
+     *   为o(1)
+     *      3、对于上面的2步骤，还可以采用每次扫描的方法，时间复杂度为o(n)
+     *   以及使用一个小顶堆，时间复杂度为o(logn)
+     */
+    public int[] getMinStack (int[][] op) {
+        // 对特殊情况进行判断
+        if (op == null || op.length == 0 || op[0].length == 0){
+            return new int[] {};
+        }
+        // 声明一个存储元素的栈和存储最小元素的栈，以及存储的结果集
+        Stack<Integer> valuesStack = new Stack<>();
+        Stack<Integer> minValueStack = new Stack<>();
+        List<Integer> tmp = new ArrayList<>();
+
+        // 遍历op中的操作
+        for (int[] o : op){
+            if (o[0] == 1){
+                if (valuesStack.isEmpty()){
+                    minValueStack.push(o[1]);
+                }else {
+                    if (minValueStack.peek() >= o[1]){
+                        minValueStack.push(o[1]);
+                    }else {
+                        minValueStack.push(minValueStack.peek());
+                    }
+                }
+                valuesStack.push(o[1]);
+            }else if (o[0] == 2){
+                // 删除元素
+                if (!valuesStack.isEmpty()){
+                    valuesStack.pop();
+                    minValueStack.pop();
+                }else {
+                    System.out.println("当前栈为空，删除失败！");
+                }
+            }else if (o[0] == 3){
+                if (!valuesStack.isEmpty()){
+                    // 将最小栈的栈顶元素加入到结果中
+                    tmp.add(minValueStack.peek());
+                }else {
+                    System.out.println("当前栈为空，获取最小元素失败");
+                }
+            }
+        }
+        int[] result = new int[tmp.size()];
+        for (int i = 0; i < tmp.size(); i++) {
+            result[i] = tmp.get(i);
+        }
+
+        return result;
     }
 
     /**
