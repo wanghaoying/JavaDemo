@@ -14,7 +14,121 @@ public class Solution03 {
 
     @Test
     public void test(){
-        System.out.println(maxProfit(new int[] {1,4,2}));
+        System.out.println(Permutation("abc"));
+    }
+
+    /**
+     * 输入一个字符串,按字典序打印出该字符串中字符的所有排列。例如输入字符串abc,
+     * 则按字典序打印出由字符a,b,c所能排列出来的所有字符串abc,acb,bac,bca,cab
+     * 和cba。
+     *
+     * 思路：
+     *      既然要求打印出的最终结果需要按照字典序进行排列，那么就有两种方案：
+     *      1、计算出全部的全排列的组合之后，再对这些所有的组合进行排序，他的排序
+     *  时间复杂度为O(n!(logn!))
+     *      2、在每次交换之后，对i位置之后的数字进行排序，每个位置都要进行一次排序，
+     *  排序的时间复杂度为o(n^2longn)，理论上在n比较大的情况下，这种方式实现的结果
+     *  可能更快一些
+     */
+    public ArrayList<String> Permutation(String str) {
+        if (str == null || str.length() == 0){
+            return new ArrayList<>();
+        }
+        // 将str装换成char[]数组
+        char[] chars = str.toCharArray();
+
+        // 声明最后的结果集
+        ArrayList<String> strings = new ArrayList<>();
+        Permutation(chars,0,chars.length-1,strings);
+        // 对最终的结果进行排序
+        strings.sort(null);
+        return strings;
+    }
+
+    private ArrayList<String> Permutation(char[] chars, int start, int end, ArrayList<String> strings){
+        // 当start==end时，说明完成了一次全排列
+        if (start == end){
+            strings.add(new String(chars));
+        }
+
+        // 递归生成所有的排列组合
+        // 声明一个HashSet记录每个索引位置上出现过的
+        HashSet<Character> hashSet = new HashSet<>();
+        for (int i = start; i < chars.length; i++){
+            if (hashSet.contains(chars[i])){
+                continue;
+            }
+            hashSet.add(chars[i]);
+            swap(chars, start, i);
+            Permutation(chars,start+1,end,strings);
+            swap(chars, start, i);
+        }
+        return strings;
+    }
+
+    // 交换char数组中 i 位置上 和 j 位置上的字符
+    private void swap(char[] chars, int i, int j){
+        char tmp = chars[i];
+        chars[i] = chars[j];
+        chars[j] = tmp;
+    }
+
+    /**
+     * 合并 k 个已排序的链表并将其作为一个已排序的链表返回。分析并描述其复杂度。
+     *
+     * 思路：
+     *      有多个已经排序好的链表需要排序，有两种方法：
+     *      1、依次merge每个待合并链表，时间复杂度为o(k^2 n)
+     *      2、根据分治的思想，对lists中的链表先，两两merge，然后merge之后，
+     *  再两两merge，直到最后合并成一个list，然后返回
+     */
+    public ListNode mergeKLists(ArrayList<ListNode> lists) {
+        // 对特殊情况进行判断
+        if (lists == null || lists.size() == 0){
+            return null;
+        }
+        // 如果只有一个链表，那么就不需要合并
+        if (lists.size() == 1){
+            return lists.get(0);
+        }
+        return mergeKLists(lists,0,lists.size()-1);
+    }
+    // 合并索引 start - end 之间的所有链表
+    private ListNode mergeKLists(ArrayList<ListNode> lists,int start, int end){
+        if (start == end){
+            return lists.get(start);
+        }
+        int mid = (start + end) /2;
+        return mergeTwoLists(mergeKLists(lists,start,mid),
+                mergeKLists(lists,mid+1,end));
+    }
+    // 合并两个有序的链表
+    private ListNode mergeTwoLists(ListNode l1, ListNode l2){
+        if (l1 == null){
+            return l2;
+        }
+        if (l2 == null){
+            return l1;
+        }
+        ListNode newHead = new ListNode(0);
+        ListNode p = newHead;
+        while (l1 != null && l2 != null){
+            if (l1.val <= l2.val){
+                p.next = l1;
+                l1 = l1.next;
+            }else {
+                p.next = l2;
+                l2 = l2.next;
+            }
+            p = p.next;
+        }
+        if (l1 != null){
+            p.next = l1;
+        }
+        if (l2 != null){
+            p.next = l2;
+        }
+        return newHead.next;
     }
 
     /**
@@ -326,6 +440,18 @@ public class Solution03 {
         TreeNode right;
 
         public TreeNode(int val) {
+            this.val = val;
+        }
+    }
+
+    class ListNode{
+        int val;
+        ListNode next;
+
+        public ListNode() {
+        }
+
+        public ListNode(int val){
             this.val = val;
         }
     }
