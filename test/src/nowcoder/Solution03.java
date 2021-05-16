@@ -14,7 +14,162 @@ public class Solution03 {
 
     @Test
     public void test(){
-        System.out.println(Permutation("abc"));
+        System.out.println(solve(new char[][] {
+                {'1','1','0','0','0'},
+                {'0','1','0','1','1'}
+        }));
+    }
+
+    /**
+     * 给定一个无序单链表，实现单链表的排序(按升序排序)。
+     * 例：[1,3,2,4,5]  --> {1,2,3,4,5}
+     *
+     * 思路：1、可以采用类似冒泡排序的方式，每次都遍历整个链表，寻找到后面链表中
+     *  数字最小的那个节点，然后交换两个节点，但是还需要保存被交换节点的prev节点
+     *      2、归并排序：根据前面那个合并K个有序链表的思想，可以将我们的当前链表
+     *  看成n个待排序的有序链表，只是每个链表上的节点只有一个。时间复杂度o(nlogn)
+     *      3、对链表中的数字进行值排序，而不是交换节点。遍历整个链表，用一个array
+     *  存储这个list中的所有节点的val，然后对这个array进行排序，然后再对原先的链表
+     *  进行遍历赋值。 代价就是会改变每个节点的值 时间复杂度为o(nlogn)
+     */
+    public ListNode sortInList (ListNode head) {
+        if (head == null){
+            return null;
+        }
+        // 2、归并排序
+//        ArrayList<ListNode> arrayList = new ArrayList<>();
+//        ListNode p;
+//        while (head != null){
+//            p = head;
+//            head = head.next;
+//            p.next = null;
+//            arrayList.add(p);
+//        }
+//        return mergeKLists(arrayList);
+
+        // 3、只对值排序
+        ArrayList<Integer> arrayList = new ArrayList<>();
+        ListNode p = head;
+        while ( p!= null){
+            arrayList.add(p.val);
+            p = p.next;
+        }
+        arrayList.sort(null);
+        p = head;
+        int index = 0;
+        while (p != null){
+            p.val = arrayList.get(index++);
+            p = p.next;
+        }
+        return head;
+    }
+
+    /**
+     * 求给定二叉树的最大深度，
+     * 最大深度是指树的根结点到最远叶子结点的最长路径上结点的数量
+     *
+     * 思路：二叉树的最大深度，等于 Max(root.left, root.right)+1
+     *      根据上面的递归公式，可以很快写出最大深度
+     */
+    public int maxDepth (TreeNode root) {
+        if (root == null){
+            return 0;
+        }
+        return Math.max(maxDepth(root.left),maxDepth(root.right))+1;
+    }
+
+    /**
+     * 给定一个字符串，请编写一个函数判断该字符串是否回文。如果回文请返回true，
+     * 否则返回false。
+     *
+     * 思路：
+     *      采用中心拓展算法，但是为了避免奇数和偶数长度的回文串的讨论，可以对这些
+     *  str中间和两端插入 # 来进行填充
+     *      优化：本质上是寻找到合适的left 和 right进行比对，那么对与奇数长度和
+     *  偶数长度的字符串，只需要分别确定其left 和 right 就可以了
+     */
+    public boolean judge (String str) {
+        // 对特殊情况进行判断，这里认为null不是回文串，但是长度小于2的字符串都是回文串
+        if (str == null){
+            return false;
+        }
+        if (str.length() <= 1){
+            return true;
+        }
+        // 对str中的内容进行 # 填充
+        char[] chars = str.toCharArray();
+
+        // 确定left 和 right指针，然后对其进行遍历对比
+        int left, right;
+        left = chars.length/2 -1;
+        if (chars.length % 2 == 0){
+            right = chars.length/2;
+        }else {
+            right = chars.length/2 +1;
+        }
+        // 根据中心拓展算法进行判断是否是回文串
+        while (left >= 0 && right < chars.length){
+            if (chars[left] != chars[right]){
+                return false;
+            }
+            left--;
+            right++;
+        }
+        return true;
+    }
+
+    /**
+     * 给一个01矩阵，1代表是陆地，0代表海洋，如果两个1相邻，
+     * 那么这两个1属于同一个岛。我们只考虑上下左右为相邻。
+     *
+     * 岛屿: 相邻陆地可以组成一个岛屿（相邻:上下左右） 判断岛屿个数。
+     *
+     * 思路：在遇到1的时候就进行dfs遍历周围的节点，除非周围的节点均为0，然后岛屿数量加1
+     * ，同时对访问过的节点进行记录，如果这个1已经在某次遍历中访问过了，那么就不需要再进行
+     * dfs遍历了
+     */
+    public int solve (char[][] grid) {
+        if (grid == null || grid.length == 0 || grid[0].length == 0){
+            return 0;
+        }
+        // 声明岛屿数量变量 和 访问标志
+        int num = 0;
+        boolean[][] flags = new boolean[grid.length][grid[0].length];
+
+        for (int i = 0; i < grid.length; i++){
+            for (int j = 0; j < grid[0].length; j++){
+                num += dfs(grid,i,j,flags);
+            }
+        }
+        return num;
+    }
+
+    private int dfs(char[][] grid, int i, int j, boolean[][] flags){
+        // 对特殊情况进行判断
+        if (grid[i][j] == '0' || flags[i][j]){
+            return 0;
+        }
+        flags[i][j] = true;
+
+        // 当前的i，j 对应的位置为1
+        // 向上
+        if (i > 0){
+            dfs(grid,i-1,j,flags);
+        }
+        // 向右
+        if (j < grid[0].length-1){
+            dfs(grid,i,j+1,flags);
+        }
+        // 向下
+        if (i < grid.length-1){
+            dfs(grid, i+1, j, flags);
+        }
+        // 向左
+        if (j > 0){
+            dfs(grid,i,j-1,flags);
+        }
+
+        return 1;
     }
 
     /**
