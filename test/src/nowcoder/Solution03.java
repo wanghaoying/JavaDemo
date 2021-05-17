@@ -14,10 +14,252 @@ public class Solution03 {
 
     @Test
     public void test(){
-        System.out.println(solve(new char[][] {
-                {'1','1','0','0','0'},
-                {'0','1','0','1','1'}
-        }));
+        System.out.println();
+    }
+
+    /**
+     * 给定一个十进制数M，以及需要转换的进制数N。将十进制数M转化为N进制数
+     */
+    public String solve (int M, int N) {
+        // write code here
+        return "";
+    }
+
+    /**
+     * 给定一个字符串数组，再给定整数k，请返回出现次数前k名的字符串和对应的次数。
+     * 返回的答案应该按字符串出现频率由高到低排序。如果不同的字符串有相同出现频率，按字典序排序。
+     * 对于两个字符串，大小关系取决于两个字符串从左到右第一个不同字符的 ASCII 值的大小关系。
+     * 比如"ah1x"小于"ahb"，"231"<”32“
+     * 字符仅包含数字和字母
+     *
+     * 思路：统计每个字符串出现的次数，其按照次数排序，次数相同的情况下，按照字符串的字典序进行排序
+     *      可以使用一个hashmap来存储字符串和其出现的次数，然后对map中的node数组进行排序，获得
+     *      前k个
+     */
+    public String[][] topKstrings (String[] strings, int k) {
+        if (strings == null || strings.length < k){
+            return new String[][] {};
+        }
+
+        // 声明一个hashmap来记录每个字符串出现的次数
+        HashMap<String,Integer> hashMap = new HashMap();
+        for (String string : strings){
+            if (hashMap.containsKey(string)){
+                hashMap.put(string,hashMap.get(string)+1);
+            }else {
+                hashMap.put(string,1);
+            }
+        }
+
+        // 获得hashmap中存储数据的node数组
+        Set<Map.Entry<String, Integer>> entries = hashMap.entrySet();
+        HashMap.Entry<String,Integer>[] es = new HashMap.Entry[entries.size()];
+        entries.toArray(es);
+        Arrays.sort(es, new Comparator<HashMap.Entry<String, Integer>>() {
+            @Override
+            public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
+                if (o1.getValue() > o2.getValue()){
+                    return -1;
+                }else if (o1.getValue() < o2.getValue()){
+                    return 1;
+                }else {
+                    return o1.getKey().compareTo(o2.getKey());
+                }
+            }
+        });
+
+        String[][] res = new String[k][2];
+        for (int i = 0; i < k; i++){
+            res[i][0] = es[i].getKey();
+            res[i][1] = es[i].getValue().toString();
+        }
+
+        return res;
+    }
+
+    /**
+     * 数组中有一个数字出现的次数超过数组长度的一半，请找出这个数字。
+     * 例如输入一个长度为9的数组[1,2,3,2,2,2,5,4,2]。由于数字2在数组中
+     * 出现了5次，超过数组长度的一半，因此输出2。你可以假设数组是非空的，
+     * 并且给定的数组总是存在多数元素。1<=数组长度<=50000
+     *
+     * 思路：假设一个数组中的多数元素是x，那么可以通过如下的方式来进行寻找：
+     *      1、假设数组中的第一个数字是目标多数元素，然后对这个元素的个数+1
+     *      2、遍历后面的元素，如果与之前设定的元素x不一致，那么个数-1
+     *      3、当个数为0的时候，重新设置多数元素，则最后剩下的元素一定是x
+     */
+    public int MoreThanHalfNum_Solution(int [] array) {
+        if (array == null || array.length == 0){
+            return -1;
+        }
+        int target = array[0], num = 1;
+        for (int i = 1; i < array.length; i++){
+            if (array[i] == target){
+                num++;
+            }else {
+                if (num == 0){
+                    target = array[i];
+                    num++;
+                }else {
+                    num--;
+                }
+            }
+        }
+        return target;
+    }
+
+    /**
+     * 输入一棵二叉树，判断该二叉树是否是平衡二叉树。
+     * 在这里，我们只需要考虑其平衡性，不需要考虑其是不是排序二叉树
+     * 平衡二叉树（Balanced Binary Tree），具有以下性质：
+     * 它是一棵空树或它的左右两个子树的高度差的绝对值不超过1，
+     * 并且左右两个子树都是一棵平衡二叉树。
+     *
+     * 思路：根据平衡二叉树的性质，我们需要保证两点：
+     *      1、左右子树的高度差不能超过1
+     *      2、左右子树均为平衡二叉树
+     */
+    public boolean IsBalanced_Solution(TreeNode root) {
+        if (root == null){
+            return true;
+        }
+
+        int leftDepth = maxDepth(root.left);
+        int rightDepth = maxDepth(root.right);
+
+        return Math.abs(leftDepth-rightDepth) <= 1 &&
+                IsBalanced_Solution(root.left) &&
+                IsBalanced_Solution(root.right);
+    }
+
+    /**
+     * 请写一个整数计算器，支持加减乘三种运算和括号。
+     *
+     * 思路：使用一个栈来保存操作数
+     *      对于括号，需要优先处理，括号的优先级高于一切
+     *      乘法的优先级高于加法和减法，对于减法，采用直接取负数的方式转换成加法运算
+     *      对于括号来说，由于不知道括号中的字符串的长度，所以可以选择递归的方式计算
+     *  括号中的内容
+     */
+    public int solve (String s) {
+        if (s == null || s.length() == 0){
+            return 0;
+        }
+
+        // 声明一个操作数栈, 以及一个保存括号的数量和对应索引位置的变量
+        Stack<Integer> stack = new Stack<>();
+        int num = 0, index = -1;
+        char opt = '+';
+
+        // 遍历字符串s中的内容
+        int i = 0;
+        while (i < s.length()){
+            char c = s.charAt(i);
+            int tmp = 0;
+            // 如果出现括号就递归进行计算
+            if (c == '('){
+                while (i < s.length()){
+                    c = s.charAt(i);
+                    if (c == '('){
+                        if (num == 0){
+                            index = i;
+                        }
+                        num++;
+                    }
+                    if (c == ')'){
+                        num--;
+                        if (num == 0){
+                            tmp = solve(s.substring(index+1,i));
+                            if (opt == '+'){
+                                stack.push(tmp);
+                            }else if (opt == '-'){
+                                stack.push(0-tmp);
+                            }else {
+                                stack.push(stack.pop()*tmp);
+                            }
+                            break;
+                        }
+                    }
+                    i++;
+                }
+            }else if (c >= '0' && c <= '9'){
+                while (i < s.length() && (c = s.charAt(i)) >= '0' && c <= '9'){
+                    tmp *= 10;
+                    tmp += c - '0';
+                    i++;
+                }
+                i--;
+                if (opt == '+'){
+                    stack.push(tmp);
+                }else if (opt == '-'){
+                    stack.push(0-tmp);
+                }else {
+                    stack.push(stack.pop()*tmp);
+                }
+            }else {
+                opt = c;
+            }
+            i++;
+        }
+
+        int res = 0;
+        while (!stack.isEmpty()){
+            res += stack.pop();
+        }
+        return res;
+    }
+
+    /**
+     *  给定一个 n * m 的矩阵 a，从左上角开始每次只能向右或者向下走，
+     *  最后到达右下角的位置，路径上所有的数字累加起来就是路径和，
+     *  输出所有的路径中最小的路径和。
+     *
+     *  思路：对于某一个位置，只能通过他上面的位置或者左边的位置到达，
+     *  如果要求到达他的路径和最小，那么就要选择minPath(上面的位置，左面的位置)
+     *  因此可以使用动态规划的方式来进行解决，需要使用一个状态表来暂存每个位置上
+     *  的最小路径和
+     */
+    public int minPathSum (int[][] matrix) {
+        if (matrix == null || matrix.length == 0 || matrix[0].length == 0){
+            return 0;
+        }
+        // 声明一个状态表
+        int[][] minPathSum = new int[matrix.length][matrix[0].length];
+
+        // 填充状态表
+        minPathSum[0][0] = matrix[0][0];
+
+        // 填充第一行
+        for (int i = 1; i < minPathSum[0].length; i++){
+            minPathSum[0][i] = minPathSum[0][i-1] + matrix[0][i];
+        }
+        // 填充第一列
+        for (int i = 1; i < minPathSum.length; i++){
+            minPathSum[i][0] = minPathSum[i-1][0] + matrix[i][0];
+        }
+
+        int up = 1, down = minPathSum.length-1;
+        int left = 1, right = minPathSum[0].length-1;
+        while (up <= down && left <= right){
+            int i = up, j = left;
+            // 先填充行
+            while (j <= right){
+                minPathSum[i][j] = Math.min(minPathSum[i-1][j],
+                            minPathSum[i][j-1]) + matrix[i][j];
+                j++;
+            }
+            j = left;
+            // 在填充列
+            while (i <= down){
+                minPathSum[i][j] = Math.min(minPathSum[i-1][j],
+                            minPathSum[i][j-1]) + matrix[i][j];
+                i++;
+            }
+            up++;
+            left++;
+        }
+
+        return minPathSum[matrix.length-1][matrix[0].length-1];
     }
 
     /**
