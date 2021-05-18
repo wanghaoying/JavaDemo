@@ -14,15 +14,156 @@ public class Solution03 {
 
     @Test
     public void test(){
-        System.out.println();
+        System.out.println(minEditCost("abc","adc",5,3,2));
+    }
+
+    /**
+     * 给定两个字符串str1和str2，再给定三个整数ic，dc和rc，分别代表插入、删除和替换一个字符的代价，
+     * 请输出将str1编辑成str2的最小代价。
+     *
+     * 思路：动态规划思想：
+     *      我们最终的目的是通过有限次的插入、删除、替换操作，来将str1 转换成str2
+     *  同时，还要求成本代价最小。 这里假设我们要将str1 转换成 str2，其中经历的插入
+     *  的次数为i，删除的次数为d，替换的次数为r，那我们可以得到整体成本代价的计算公式
+     *  cost = i*ic + d*dc + r*rc，我们最终的目的就是使选择一种合适的i,d,r，使得
+     *  cost最小
+     *
+     *      对于str1 和 str2 我们可以建立这样的状态表：
+     *      dp[i][j]: str1的前i个字符，转换成，str2前j个字符，所需要付出的代价
+     *
+     *      显然可以得到 dp[i][0] = 删除i个字符的代价
+     *                 dp[0][j] = 插入j个字符的代价
+     *      那么对于dp[i][j]: (i>0 && j>0)
+     *          1、如果i字符和j字符相同，那么dp[i][j] = dp[i-1][j-1]
+     *          2、如果字符i和字符j不相同，那么dp[i][j] = min(insert,delete,replace)
+     *          其中：（本质是就是将 str1前i个字符 转换成 str2 前j个字符 的操作情况）
+     *              insert = dp[i][j-1]+1*ic (将前i个字符转换成前j-1个字符，然后再插入一个新的字符)
+     *              delete = dp[i-1][j]+1*dc (将前i-1个字符转换成前j个字符，然后删除掉第i个字符)
+     *              replace = dp[i-1][j-1]+1*rc (将前i-1个字符转换成前j-1个字符，然后对第i个字符进行替换)
+     *      因此，最终的dp[str1.length()][str2.length] 为最终的结果
+     */
+    public int minEditCost (String str1, String str2, int ic, int dc, int rc) {
+        // 对特殊情况的处理
+        if (str1 == null || str2 == null){
+            return 0;
+        }
+        // 当str2为空串的时候，代价就是将str1中的字符全部删掉
+        if (str2.length() == 0){
+            return str1.length()*dc;
+        }
+        // 当str1为空串的时候，代价就是插入str2.length()个字符
+        if (str1.length() == 0){
+            return str2.length()*ic;
+        }
+        // 初始化状态表
+        int[][] cost = new int[str1.length()+1][str2.length()+1];
+        for (int i = 0; i < cost.length; i++){
+            cost[i][0] = i * dc;
+        }
+        for (int i = 0; i < cost[0].length; i++){
+            cost[0][i] = i * ic;
+        }
+        // 循环填充代价状态表
+        for (int i = 1; i < cost.length; i++){
+            for (int j = 1; j < cost[0].length; j++){
+                if (str1.charAt(i-1) == str2.charAt(j-1)){
+                    cost[i][j] = cost[i-1][j-1];
+                }else {
+                    cost[i][j] = Math.min(
+                            Math.min(
+                                    cost[i][j-1]+ic,
+                                    cost[i-1][j]+dc
+                            ),
+                            cost[i-1][j-1]+rc
+                    );
+                }
+            }
+        }
+        return cost[str1.length()][str2.length()];
+    }
+
+    /**
+     * 给定一个链表，请判断该链表是否为回文结构。
+     *
+     * 思路：1、可以将这个链表转换成数组，然后通过数组来进行是否是回文结构的判断，需要额外的开辟一个o(n)的空间
+     *   时间复杂度为o(n)
+     *      2、可以对链表中间位置之后的节点进行反转，然后进行比较
+     */
+    public boolean isPail (ListNode head) {
+        if (head == null){
+            return false;
+        }
+        // 1、链表转数组，使用中心拓展算法进行判断
+//        // 声明一个数组来存储链表中的结构
+//        Deque<ListNode> deque = new LinkedList<>();
+//        // 将链表转换成数组的结构
+//        ListNode p = head;
+//        while (p != null){
+//            deque.offerLast(p);
+//            p = p.next;
+//        }
+//        // 使用中心拓展算法来进行回文结构的判断
+//        while (deque.size() > 1){
+//            if (deque.pollFirst().val != deque.pollLast().val){
+//                return false;
+//            }
+//        }
+//        return true;
+        // 2、使用一个快慢指针找到链表的中间位置节点，然后对其后面的节点进行反转
+        ListNode fast = head, slow = head;
+        // 找到链表的中间节点
+        while (fast != null && fast.next != null){
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        // 对slow之后的节点进行反转
+        ListNode prev = null, tmp;
+        while (slow != null){
+            tmp = slow.next;
+            slow.next = prev;
+            prev = slow;
+            slow = tmp;
+        }
+
+        while (prev != null){
+            if (head.val != prev.val){
+                return false;
+            }
+            head = head.next;
+            prev = prev.next;
+        }
+        return true;
     }
 
     /**
      * 给定一个十进制数M，以及需要转换的进制数N。将十进制数M转化为N进制数
+     *
+     * 思路：2 <= N <= 16
+     *      关键在于：如何对这些转换之后的N进制数字来准确的表示。比如16进制需要使用0-9 & A-F的数值来表示16
+     *   进制。所以我们可以预先设置一个对应表，这个对应表在每个索引位置上对应不同的数值表示
      */
     public String solve (int M, int N) {
-        // write code here
-        return "";
+        if (N < 2 && N > 16){
+            return "";
+        }
+        char[] chars = new char[] {
+                '0','1','2','3','4','5','6','7','8','9',
+                'A','B','C','D','E','F'
+        };
+        // 对负数进行特殊处理
+        boolean flag = false;
+        if (M < 0){
+            flag = true;
+            M = 0-M;
+        }
+        // 声明最终的结果集
+        StringBuilder sb = new StringBuilder();
+        // 将10进制的数字M转换成N进制的数字
+        while (M != 0){
+            sb.append(chars[M % N]);
+            M = M / N;
+        }
+        return flag ? "-"+sb.reverse().toString() : sb.reverse().toString();
     }
 
     /**
