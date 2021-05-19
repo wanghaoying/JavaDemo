@@ -14,7 +14,168 @@ public class Solution03 {
 
     @Test
     public void test(){
-        System.out.println(minEditCost("abc","adc",5,3,2));
+        System.out.println(findMedianinTwoSortedAray(
+                new int[] {0,1,2,3,4},
+                new int[] {2,2,3,4,5}
+        ));
+    }
+
+    /**
+     * 给定一棵二叉树，已经其中没有重复值的节点，请判断该二叉树是否为搜索二叉树和完全二叉树。
+     *
+     * 完全二叉树：是指二叉树中，除了最后一层没有满之外，其他层全都是满二叉树，而且最后一层，需要
+     * 节点从左到右一次排列
+     *
+     * 思路：分别判断是否是二叉搜索树 和 完全二叉树 然后返回
+     */
+    public boolean[] judgeIt (TreeNode root) {
+        boolean isSearchTree = isSearchTree(root,Integer.MIN_VALUE,Integer.MAX_VALUE);
+        boolean isCompleteTree = isCompleteTree(root);
+        return new boolean[] {isSearchTree,isCompleteTree};
+    }
+
+    private boolean isCompleteTree(TreeNode root){
+        if (root == null){
+            return true;
+        }
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+        while (queue.peek() != null){
+            TreeNode t = queue.poll();
+            queue.offer(t.left);
+            queue.offer(t.right);
+        }
+        while (!queue.isEmpty() && queue.peek()==null){
+            queue.poll();
+        }
+        return queue.isEmpty();
+    }
+
+    private boolean isSearchTree(TreeNode root, int min, int max){
+        if (root == null){
+            return true;
+        }
+
+        if (root.val < min || root.val > max){
+            return false;
+        }
+
+        return isSearchTree(root.left, min, root.val) &&
+                isSearchTree(root.right, root.val, max);
+    }
+
+    /**
+     * 给定两个有序数组arr1和arr2，已知两个数组的长度都为N，求两个数组中所有数的上中位数。
+     * 上中位数：假设递增序列长度为n，若n为奇数，则上中位数为第n/2+1个数；否则为第n/2个数
+     *
+     * 要求：
+     * 时间复杂度为O(logN)，额外空间复杂度为O(1)
+     *
+     * 思路：本质上就是寻找两个数组中排序后的第i个元素，因为两个数组是排序的，所以可以使用二分法来
+     * 进行解决这个问题。
+     *      如果arr1中i位置上的元素比arr2中j位置上的元素小，那么i之前的所有元素，都要比j小
+     */
+    public int findMedianinTwoSortedAray (int[] arr1, int[] arr2) {
+        int length = arr1.length;
+        // 目标就是寻找arr1 中和 arr2 中第index大的元素
+        return findKth(arr1, arr2, 0, arr1.length-1,
+                0, arr2.length-1,length);
+    }
+    // 寻找arr1 中和 arr2 中第k大的元素
+    private int findKth(int[] arr1, int[] arr2, int l1, int r1, int l2, int r2, int k){
+        int m = r1-l1+1;
+        int n = r2-l2+1;
+
+        if (m == 0){
+            return arr2[l2+k-1];
+        }
+        if (n == 0){
+            return arr1[l1+k-1];
+        }
+        if (k == 1){
+            return Math.min(arr1[l1],arr2[l2]);
+        }
+
+        int mid1 = l1 + Math.min(m, k/2) -1;
+        int mid2 = l2 + Math.min(n, k/2) -1;
+
+        if (arr1[mid1] < arr2[mid2]){
+            return findKth(arr1,arr2,mid1+1,r1,l2,r2,k-(mid1-l1+1));
+        }else {
+            return findKth(arr1,arr2,l1,r1,mid2+1,r2,k-(mid2-l2+1));
+        }
+    }
+
+    /**
+     * 给定两个字符串str1和str2，输出两个字符串的最长公共子序列。如果最长公共子序列为空，
+     * 则返回"-1"。目前给出的数据，仅仅会存在一个最长的公共子序列
+     *  例： "1A2C3D4B56","B1D23A456A"
+     *  结果："123456"
+     *
+     * 思路1：可以使用dfs来生成其中一个字符串的所有的子序列，然后对这些子序列进行判断是否是公共的，
+     * 从中选出最长的公共子序列来进行返回，生成所有子序列的时间复杂度为o(2^n),进行判断的时间复杂度为
+     * o(m+n),最中的时间复杂度为o((m+n)2^n)
+     *
+     * 思路2：上面直接使用dfs的时间复杂度非常高，呈现指数级的增长趋势，所以这里改用动态规划的方式来进行
+     * 问题的求解。
+     *     我们注意到问题的目的是，s1 和 s2 的最长公共子序列，那我们可以注意到，最终的结果与我们的
+     * s1 和 s2 都有关，如果s1 或者 s2 发生了改变，那么最终的结果也可能发生改变。所以我们的结果和
+     * s1 以及 s2 的长度有关，所以我们要建立的递归公式中的变量，要包含 s1 和 s2 的长度
+     *
+     *     下面我们建立如下的状态表：
+     *     dp[i][j]：表示s1 的前i个字符，与 s2 的前j个字符中，存在的最长公共子序列的长度
+     *     则，最终dp[s1.length()][s2.length()]的值，就是s1 和 s2 最长公共子序列长度的值
+     *
+     *     那么 dp[i][j] = {
+     *         0,    i = 0  || j = 0
+     *         dp[i-1][j-1]+1,  i,j > 0 && s1[i] = s2[j]
+     *         Max(dp[i-1][j],dp[i][j-1])    i,j>0 && s1[i] != s2[j]
+     *     }
+      */
+    public String LCS (String s1, String s2) {
+        if (s1 == null || s2 == null || s1.length() == 0 || s2.length() == 0){
+            return "-1";
+        }
+
+        // 声明状态数组
+        int[][] dp = new int[s1.length()+1][s2.length()+1];
+
+        // 初始化状态数组，可以跳过这个步骤，因为在dp创建的时候，每个位置上已经进行了默认0填充
+        // 填充状态数组
+        for (int i = 1; i < dp.length; i++){
+            for (int j = 1; j < dp[0].length; j++){
+                if (s1.charAt(i-1) == s2.charAt(j-1)){
+                    dp[i][j] = dp[i-1][j-1]+1;
+                }else {
+                    dp[i][j] = Math.max(dp[i-1][j],dp[i][j-1]);
+                }
+            }
+        }
+
+        // 回溯状态数组找到最长的公共子序列
+        if (dp[dp.length-1][dp[0].length-1] == 0){
+            return "-1";
+        }
+        StringBuilder sb = new StringBuilder();
+        int i = dp.length-1, j = dp[0].length-1;
+        while (i > 0 && j > 0){
+
+            if (s1.charAt(i-1) == s2.charAt(j-1)){
+                sb.append(s2.charAt(j-1));
+                i--;
+                j--;
+            }else {
+                if (dp[i-1][j] > dp[i][j-1]){
+                    i--;
+                }else {
+                    j--;
+                }
+            }
+        }
+        if (sb.length() == 0){
+            return "-1";
+        }
+        return sb.reverse().toString();
     }
 
     /**

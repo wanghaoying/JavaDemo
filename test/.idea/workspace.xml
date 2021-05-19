@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="970689e3-fb52-4195-987c-0d0fb329242c" name="Default Changelist" comment="" />
+    <list default="true" id="970689e3-fb52-4195-987c-0d0fb329242c" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/nowcoder/Solution03.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/nowcoder/Solution03.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -98,11 +101,12 @@
       <workItem from="1621062601367" duration="15362000" />
       <workItem from="1621212202476" duration="10052000" />
       <workItem from="1621300353597" duration="9167000" />
+      <workItem from="1621390363925" duration="12370000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="1" />
+    <option name="version" value="2" />
   </component>
   <component name="WindowStateProjectService">
     <state x="414" y="175" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1620480620172">
@@ -113,49 +117,49 @@
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state x="533" y="184" key="#com.intellij.ide.util.MemberChooser/0.23.1440.877@0.23.1440.877" timestamp="1621062749447" />
-    <state width="1398" height="392" key="GridCell.Tab.0.bottom" timestamp="1621327582404">
-      <screen x="0" y="23" width="1440" height="877" />
+    <state width="1877" height="276" key="GridCell.Tab.0.bottom" timestamp="1621402182472">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="348" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1620819993447" />
+    <state width="1877" height="276" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1621402182472" />
     <state width="1398" height="392" key="GridCell.Tab.0.bottom/0.23.1440.877@0.23.1440.877" timestamp="1621327582404" />
     <state width="1878" height="289" key="GridCell.Tab.0.bottom/0.23.1920.1057@0.23.1920.1057" timestamp="1621305276322" />
-    <state width="1398" height="392" key="GridCell.Tab.0.center" timestamp="1621327582403">
-      <screen x="0" y="23" width="1440" height="877" />
+    <state width="1877" height="276" key="GridCell.Tab.0.center" timestamp="1621402182472">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="348" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1620819993447" />
+    <state width="1877" height="276" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1621402182472" />
     <state width="1398" height="392" key="GridCell.Tab.0.center/0.23.1440.877@0.23.1440.877" timestamp="1621327582403" />
     <state width="1878" height="289" key="GridCell.Tab.0.center/0.23.1920.1057@0.23.1920.1057" timestamp="1621305276320" />
-    <state width="1398" height="392" key="GridCell.Tab.0.left" timestamp="1621327582402">
-      <screen x="0" y="23" width="1440" height="877" />
+    <state width="1877" height="276" key="GridCell.Tab.0.left" timestamp="1621402182472">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="348" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1620819993447" />
+    <state width="1877" height="276" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1621402182472" />
     <state width="1398" height="392" key="GridCell.Tab.0.left/0.23.1440.877@0.23.1440.877" timestamp="1621327582402" />
     <state width="1878" height="289" key="GridCell.Tab.0.left/0.23.1920.1057@0.23.1920.1057" timestamp="1621305276319" />
-    <state width="1398" height="392" key="GridCell.Tab.0.right" timestamp="1621327582404">
-      <screen x="0" y="23" width="1440" height="877" />
+    <state width="1877" height="276" key="GridCell.Tab.0.right" timestamp="1621402182472">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="348" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1620819993447" />
+    <state width="1877" height="276" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1621402182472" />
     <state width="1398" height="392" key="GridCell.Tab.0.right/0.23.1440.877@0.23.1440.877" timestamp="1621327582404" />
     <state width="1878" height="289" key="GridCell.Tab.0.right/0.23.1920.1057@0.23.1920.1057" timestamp="1621305276321" />
-    <state width="1398" height="392" key="GridCell.Tab.1.bottom" timestamp="1621327582405">
-      <screen x="0" y="23" width="1440" height="877" />
+    <state width="1877" height="348" key="GridCell.Tab.1.bottom" timestamp="1621401838506">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="348" key="GridCell.Tab.1.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1620819993447" />
+    <state width="1877" height="348" key="GridCell.Tab.1.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1621401838506" />
     <state width="1398" height="392" key="GridCell.Tab.1.bottom/0.23.1440.877@0.23.1440.877" timestamp="1621327582405" />
-    <state width="1398" height="392" key="GridCell.Tab.1.center" timestamp="1621327582405">
-      <screen x="0" y="23" width="1440" height="877" />
+    <state width="1877" height="348" key="GridCell.Tab.1.center" timestamp="1621401838506">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="348" key="GridCell.Tab.1.center/0.0.1920.1040@0.0.1920.1040" timestamp="1620819993447" />
+    <state width="1877" height="348" key="GridCell.Tab.1.center/0.0.1920.1040@0.0.1920.1040" timestamp="1621401838506" />
     <state width="1398" height="392" key="GridCell.Tab.1.center/0.23.1440.877@0.23.1440.877" timestamp="1621327582405" />
-    <state width="1398" height="392" key="GridCell.Tab.1.left" timestamp="1621327582405">
-      <screen x="0" y="23" width="1440" height="877" />
+    <state width="1877" height="348" key="GridCell.Tab.1.left" timestamp="1621401838506">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="348" key="GridCell.Tab.1.left/0.0.1920.1040@0.0.1920.1040" timestamp="1620819993447" />
+    <state width="1877" height="348" key="GridCell.Tab.1.left/0.0.1920.1040@0.0.1920.1040" timestamp="1621401838506" />
     <state width="1398" height="392" key="GridCell.Tab.1.left/0.23.1440.877@0.23.1440.877" timestamp="1621327582405" />
-    <state width="1398" height="392" key="GridCell.Tab.1.right" timestamp="1621327582405">
-      <screen x="0" y="23" width="1440" height="877" />
+    <state width="1877" height="348" key="GridCell.Tab.1.right" timestamp="1621401838506">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="348" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1620819993447" />
+    <state width="1877" height="348" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1621401838506" />
     <state width="1398" height="392" key="GridCell.Tab.1.right/0.23.1440.877@0.23.1440.877" timestamp="1621327582405" />
     <state x="704" y="221" key="RollbackChangesDialog" timestamp="1620469441246">
       <screen x="0" y="0" width="1920" height="1040" />
@@ -185,5 +189,12 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1620713226519" />
+  </component>
+  <component name="XDebuggerManager">
+    <watches-manager>
+      <configuration name="JUnit">
+        <watch expression="dp[7]" />
+      </configuration>
+    </watches-manager>
   </component>
 </project>
