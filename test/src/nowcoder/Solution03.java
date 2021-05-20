@@ -14,10 +14,174 @@ public class Solution03 {
 
     @Test
     public void test(){
-        System.out.println(findMedianinTwoSortedAray(
-                new int[] {0,1,2,3,4},
-                new int[] {2,2,3,4,5}
-        ));
+        System.out.println(uniquePaths(2,2));
+    }
+
+    /**
+     * 一个机器人在m×n大小的地图的左上角（起点）。
+     * 机器人每次向下或向右移动。机器人要到达地图的右下角（终点）。
+     * 可以有多少种不同的路径从起点走到终点？
+     *
+     * 思路：
+     *      1、dfs，当走到终点时，总路径数+1，但是有很多重复子问题，会导致时间复杂度变高，超时，时间复杂度为?
+     *      2、动态规划：我们最终的结果的重点是 右下角的那个位置，根据题意我们可以很快的写出递推公式
+     *      dp[i][j] = dp[i-1][j] + dp[i][j-1]
+     */
+    int num = 0;
+    public int uniquePaths (int m, int n) {
+        if (m == 1 || n == 1){
+            return 1;
+        }
+
+        // 声明状态表
+        int[][] dp = new int[m][n];
+        dp[0][0] = 1;
+        // 初始化状态表
+        for (int i = 1; i < dp.length; i++){
+            dp[i][0] = dp[i-1][0];
+        }
+        for (int i = 1; i < dp[0].length; i++){
+            dp[0][i] = dp[0][i-1];
+        }
+        // 填充状态表
+        for (int i = 1; i < dp.length; i++){
+            for (int j = 1; j < dp[0].length; j++){
+                dp[i][j] = dp[i-1][j] + dp[i][j-1];
+            }
+        }
+        return dp[m-1][n-1];
+//        dfs(m,n,1,1);
+//        return num;
+    }
+
+    private void dfs(int m, int n, int i, int j){
+        if (i == m && j == n){
+            num++;
+            return;
+        }
+        if (i == m){
+            dfs(m,n,i,j+1);
+            return;
+        }
+        if (j == n){
+            dfs(m,n,i+1,j);
+            return;
+        }
+
+        dfs(m,n,i+1,j);
+        dfs(m,n,i,j+1);
+    }
+
+    /**
+     * 将一个链表 m 位置到 n 位置之间的区间反转，要求时间复杂度 O(n)，空间复杂度 O(1)。
+     * 例如：给出的链表为 1→2→3→4→5→NULL, m=2,n=4
+     * 返回 1→4→3→2→5→NULL
+     *
+     * 注意：给出的 m,n 满足以下条件：
+     *      链表长度1≤m≤n≤链表长度
+     */
+    public ListNode reverseBetween (ListNode head, int m, int n) {
+        if (head == null || m == n){
+            return head;
+        }
+        ListNode newHead = new ListNode(0);
+        newHead.next = head;
+        ListNode prev = newHead;
+        int num = 1;
+        // 首先定位到第m个节点
+        while (num != m){
+            prev = head;
+            head = head.next;
+            num++;
+        }
+        // 然后对m-n之间的链表进行反转
+        ListNode start = prev, tmp;
+        while (num != n){
+            tmp = head.next;
+            head.next = prev;
+            prev = head;
+            head = tmp;
+            num++;
+        }
+        start.next.next = head.next;
+        head.next = prev;
+        start.next = head;
+        return newHead.next;
+    }
+
+    /**
+     * 给定一个二叉树和一个值 sum，请找出所有的根节点到叶子节点的节点值之和等于 sum 的路径，
+     *
+     * 例如：{1,2},3  输出 [[1,2]]
+     *
+     * 思路：对整棵树进行遍历，当到达其根节点时，进行比对是否等于sum，如果等于，就他其加入
+     * 到最终的结果集中
+     */
+    ArrayList<ArrayList<Integer>> arrayLists = new ArrayList<>();
+    public ArrayList<ArrayList<Integer>> pathSum (TreeNode root, int sum) {
+        arrayLists.clear();
+        pathSum(root,sum,new ArrayList<Integer>(),0);
+        return arrayLists;
+    }
+
+    private void pathSum(TreeNode root, int sum,
+                         ArrayList<Integer> path, int currentSum){
+        if (root == null){
+            return;
+        }
+        // 对叶子节点进行判定
+        if (root.left == null && root.right == null){
+            if (currentSum+root.val == sum){
+                ArrayList<Integer> targetPath = new ArrayList<>(path);
+                targetPath.add(root.val);
+                arrayLists.add(targetPath);
+            }
+            return;
+        }
+        // 提前进行剪枝，因为有节点为负数的情况，所以不能提前剪枝
+//        if (root.val + currentSum > sum){
+//            return;
+//        }
+        path.add(root.val);
+        pathSum(root.left,sum,path,currentSum+root.val);
+        pathSum(root.right,sum,path,currentSum+root.val);
+        path.remove(path.size()-1);
+    }
+
+    /**
+     * 给定一个仅包含数字 0−9 的二叉树，每一条从根节点到叶子节点的路径都可以用一个数字表示。
+     * 例如根节点到叶子节点的一条路径是1→2→3,那么这条路径就用 123 来代替。
+     * 找出根节点到叶子节点的所有路径表示的数字之和
+     *
+     * 例如 ：  输入 {1,0}，输出 10
+     *         输入 {1,#,9}，输出19
+     *
+     * 思路：对于最终的结果，走的是一条从根节点到叶子节点的路径，我们可以这么定义一个递归公式
+     *    dp[i] 表示从根节点，到这个节点i时的路径表示
+     *    那么对于叶子节点j,其父节点为k：
+     *                  dp[j] = dp[k]*10 + j.val
+     *    那么就可以根据这个递推公式很快的写出结果（动态规划思想）
+     */
+    public int sumNumbers (TreeNode root) {
+        if (root == null){
+            return 0;
+        }
+        return sumNumbers(root,0);
+    }
+
+    public int sumNumbers(TreeNode root, int parentNum){
+        if (root.left == null && root.right == null){
+            return parentNum*10+root.val;
+        }
+
+        int num = 0;
+        if (root.left != null){
+            num += sumNumbers(root.left,parentNum*10+root.val);
+        }
+        if (root.right != null){
+            num += sumNumbers(root.right,parentNum*10+root.val);
+        }
+        return num;
     }
 
     /**
