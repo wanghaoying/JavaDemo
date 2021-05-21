@@ -12,6 +12,16 @@ public class IocDemo01 {
         ClassPathXmlApplicationContext applicationContext =
                 new ClassPathXmlApplicationContext("ioc.xml");
 
+        String[] beanDefinitionNames = applicationContext.getBeanDefinitionNames();
+        for (String beanDefinitionName : beanDefinitionNames) {
+            System.out.println(beanDefinitionName);
+        }
+
+        String[] beanNamesForType = applicationContext.getBeanNamesForType(Car.class);
+        for (String s : beanNamesForType) {
+            System.out.println(s);
+        }
+
 //        String[] beanDefinitionNames = applicationContext.getBeanDefinitionNames();
 //        for (String beanDefinitionName : beanDefinitionNames) {
 //            System.out.println(beanDefinitionName);

@@ -15,7 +15,10 @@ public class IocDemo02 {
         applicationContext.register(AppConfig07.class);
         applicationContext.refresh();
 
-        Car bean = applicationContext.getBean(Car.class);
-        System.out.println(bean.getCarId());
+        Object car01 = applicationContext.getBean("car01");
+        System.out.println(car01);
+
+//        Car bean = applicationContext.getBean(Car.class);
+//        System.out.println(bean.getCarId());
     }
 }
