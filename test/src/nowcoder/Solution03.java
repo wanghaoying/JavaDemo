@@ -14,7 +14,129 @@ public class Solution03 {
 
     @Test
     public void test(){
-        System.out.println(uniquePaths(2,2));
+        System.out.println(minNumberdisappered(new int[] {-1,2,3,4}));
+    }
+
+    /**
+     * 给定一个无序数组arr，找到数组中未出现的最小正整数
+     * 例如arr = [-1, 2, 3, 4]。返回1
+     * arr = [1, 2, 3, 4]。返回5
+     * [要求]
+     * 时间复杂度为O(n)，空间复杂度为O(1)
+     *
+     * 思路：1、如果不要求时间复杂度可以，先对arr进行一次排序，然后遍历查找，这样的时间复杂度为
+     * o(nlogn)，不满足题意
+     *      2、对问题进行总结，我们可以得出一个结论，这个最小的正整数一定出现在[1,arr.length+1]
+     *  中。
+     *      那么，我们将其中的每个数字，映射到其应该对应的索引位置上，对于超出或者小于
+     *  [1,arr.length]的数字，可以不作处理，然后重新扫描整张表，如果索引位置i上对应的数字
+     *  不为i+1的话，那么i+1就是我们最终需要寻找的数字
+     *
+     */
+    public int minNumberdisappered (int[] arr) {
+        if (arr == null || arr.length == 0){
+            return -1;
+        }
+        // 将arr中在[1,arr.length]中的数字，索引到对应的位置上
+        for (int i = 0; i < arr.length; i++){
+            int n = arr[i];
+            if (n >= 1 && n <= arr.length){
+                arr[n-1] = n;
+            }
+        }
+        // 寻找未出现的最小正整数
+        for (int i = 0; i < arr.length; i++){
+            if (arr[i] != i+1){
+                return i+1;
+            }
+        }
+        return arr.length+1;
+    }
+
+    /**
+     * 已知int一个有序矩阵mat，同时给定矩阵的大小n和m以及需要查找的元素x，
+     * 且矩阵的行和列都是从小到大有序的。设计查找算法返回所查找元素的二元数组，
+     * 代表该元素的行号和列号(均从零开始)。保证元素互异。
+     *
+     * 思路：这个矩阵mat的每行、每列都是从小到大顺序排列的，也就是有序的，在有序的情况下进行查找的
+     * 首选方式是二分查找，但是应该注意到的一点是，如果要对行进行二分查找，那么有个问题就是他可能
+     * 出现在很多候选行，处理起来就比较复杂。所以对行的确定就采用遍历的模式，最多是O(nlogn)的时间
+     * 复杂度
+     */
+    public int[] findElement(int[][] mat, int n, int m, int x) {
+        if (mat == null || mat.length == 0 || mat[0].length == 0){
+            return new int[] {};
+        }
+
+        int height = mat.length, width = mat[0].length;
+        for (int i = 0; i < height; i++){
+            if (mat[i][0] <= x && mat[i][width-1] >= x){
+                int s = binarySearch(mat[i], x);
+                if (s != -1){
+                    return new int[] {i,s};
+                }
+            }
+        }
+        return new int[] {};
+    }
+
+    private int binarySearch(int[] nums, int target){
+        int left = 0, right = nums.length-1;
+        while (left <= right){
+            int mid = (left+right) /2;
+            if (nums[mid] == target){
+                return mid;
+            }else if (nums[mid] > target){
+                right = mid-1;
+            }else {
+                left = mid+1;
+            }
+        }
+        return -1;
+    }
+
+
+    /**
+     * 给出一组区间，请合并所有重叠的区间。
+     * 请保证合并后的区间按区间起点升序排列。
+     *
+     * 思路：对这些区间进行排序，让start小的尽量靠前，然后再对这些区间进行合并，时间复杂度为O(nlogn)
+     */
+    public ArrayList<Interval> merge(ArrayList<Interval> intervals) {
+        if (intervals == null || intervals.size() <= 1){
+            return intervals;
+        }
+        // 对这些区间进行排序
+        intervals.sort(new Comparator<Interval>() {
+            @Override
+            public int compare(Interval o1, Interval o2) {
+                if (o1.start < o2.start){
+                    return -1;
+                }else if (o1.start > o2.start){
+                    return 1;
+                }else {
+                    return o1.end <= o2.end ? -1 : 1;
+                }
+            }
+        });
+
+        ArrayList<Interval> arrayList = new ArrayList<>();
+        // 合并区间
+        int index = 0;
+        Interval start = intervals.get(index++);
+
+        while (index < intervals.size()){
+            Interval tmp = intervals.get(index);
+            if (tmp.start <= start.end){
+                start.end = Math.max(start.end, tmp.end);
+            }else {
+                arrayList.add(start);
+                start = tmp;
+            }
+            index++;
+        }
+        arrayList.add(start);
+        return arrayList;
     }
 
     /**
@@ -1316,6 +1438,21 @@ public class Solution03 {
 
         public ListNode(int val){
             this.val = val;
+        }
+    }
+
+    class Interval{
+        int start;
+        int end;
+
+        public Interval(){
+            this.start = 0;
+            this.end = 0;
+        }
+
+        public Interval(int start, int end){
+            this.start = start;
+            this.end = end;
         }
     }
 
