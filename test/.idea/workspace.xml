@@ -131,29 +131,29 @@
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state x="533" y="184" key="#com.intellij.ide.util.MemberChooser/0.23.1440.877@0.23.1440.877" timestamp="1621062749447" />
-    <state width="1398" height="229" key="GridCell.Tab.0.bottom" timestamp="1621595663309">
+    <state width="1398" height="229" key="GridCell.Tab.0.bottom" timestamp="1621668092862">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state width="1877" height="276" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1621402182472" />
-    <state width="1398" height="229" key="GridCell.Tab.0.bottom/0.23.1440.877@0.23.1440.877" timestamp="1621595663309" />
+    <state width="1398" height="229" key="GridCell.Tab.0.bottom/0.23.1440.877@0.23.1440.877" timestamp="1621668092862" />
     <state width="1878" height="289" key="GridCell.Tab.0.bottom/0.23.1920.1057@0.23.1920.1057" timestamp="1621305276322" />
-    <state width="1398" height="229" key="GridCell.Tab.0.center" timestamp="1621595663307">
+    <state width="1398" height="229" key="GridCell.Tab.0.center" timestamp="1621668092860">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state width="1877" height="276" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1621402182472" />
-    <state width="1398" height="229" key="GridCell.Tab.0.center/0.23.1440.877@0.23.1440.877" timestamp="1621595663307" />
+    <state width="1398" height="229" key="GridCell.Tab.0.center/0.23.1440.877@0.23.1440.877" timestamp="1621668092860" />
     <state width="1878" height="289" key="GridCell.Tab.0.center/0.23.1920.1057@0.23.1920.1057" timestamp="1621305276320" />
-    <state width="1398" height="229" key="GridCell.Tab.0.left" timestamp="1621595663307">
+    <state width="1398" height="229" key="GridCell.Tab.0.left" timestamp="1621668092860">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state width="1877" height="276" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1621402182472" />
-    <state width="1398" height="229" key="GridCell.Tab.0.left/0.23.1440.877@0.23.1440.877" timestamp="1621595663307" />
+    <state width="1398" height="229" key="GridCell.Tab.0.left/0.23.1440.877@0.23.1440.877" timestamp="1621668092860" />
     <state width="1878" height="289" key="GridCell.Tab.0.left/0.23.1920.1057@0.23.1920.1057" timestamp="1621305276319" />
-    <state width="1398" height="229" key="GridCell.Tab.0.right" timestamp="1621595663308">
+    <state width="1398" height="229" key="GridCell.Tab.0.right" timestamp="1621668092861">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state width="1877" height="276" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1621402182472" />
-    <state width="1398" height="229" key="GridCell.Tab.0.right/0.23.1440.877@0.23.1440.877" timestamp="1621595663308" />
+    <state width="1398" height="229" key="GridCell.Tab.0.right/0.23.1440.877@0.23.1440.877" timestamp="1621668092861" />
     <state width="1878" height="289" key="GridCell.Tab.0.right/0.23.1920.1057@0.23.1920.1057" timestamp="1621305276321" />
     <state width="1398" height="392" key="GridCell.Tab.1.bottom" timestamp="1621504943942">
       <screen x="0" y="23" width="1440" height="877" />
@@ -203,10 +203,11 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="616" y="240" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1620268013638" />
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1620713226519">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state x="467" y="213" width="670" height="572" key="search.everywhere.popup" timestamp="1621676208600">
+      <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1620713226519" />
+    <state x="467" y="213" width="670" height="572" key="search.everywhere.popup/0.23.1440.877@0.23.1440.877" timestamp="1621676208600" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>

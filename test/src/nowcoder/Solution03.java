@@ -14,7 +14,130 @@ public class Solution03 {
 
     @Test
     public void test(){
-        System.out.println(minNumberdisappered(new int[] {-1,2,3,4}));
+        System.out.println(solve(new int[] {1,2,3}));
+    }
+
+    /**
+     * 给出一个升序排序的链表，删除链表中的所有重复出现的元素，只保留原链表中只出现一次的元素。
+     * 例如：
+     * 给出的链表为1→2→3→3→4→4→5, 返回1→2→5.
+     * 给出的链表为1→1→1→2→3, 返回2→3.
+     *
+     * 思路：因为链表是升序进行排列的，那么对于重复出现的数字一定是连续在一起的，那么我们可以对这些
+     * 重复出现的数字不作处理，直接忽略掉，但是这需要存储一个当前元素的前向节点指针
+     */
+    public ListNode deleteDuplicates (ListNode head) {
+        if (head == null){
+            return head;
+        }
+        // 生成一个新的头节点，必须要做，因为可能head的头节点是重复的节点，要被删掉
+        ListNode newHead = new ListNode(0);
+        ListNode prev = newHead;
+        newHead.next = head;
+
+        while (head != null){
+            // 判断这个节点是否应该跳过
+            ListNode p = head;
+            boolean flag = false;
+            while (head.next != null){
+                if (p.val == head.next.val){
+                    head = head.next;
+                    flag = true;
+                }else {
+                    break;
+                }
+            }
+            if (flag){
+                head = head.next;
+                continue;
+            }
+            prev.next = head;
+            head = head != null ? head.next : null;
+            prev = prev.next;
+        }
+        return newHead.next;
+    }
+
+
+    /**
+     * 给定一个单链表，请设定一个函数，将链表的奇数位节点和偶数位节点分别放在一起，重排后输出。
+     * 注意是节点的编号而非节点的数值。
+     *
+     *  ⚠️：题目中要求的是重排的是节点，而不是只是对节点的数值进行交换
+     *
+     *  1、使用两个指针，一个指向奇数位节点的起始位置，一个指向偶数位节点的起始位置，然后分别形成
+     *  两个链表，然后再将这两个链表进行连接起来。
+     */
+    public ListNode oddEvenList (ListNode head) {
+        if (head == null){
+            return head;
+        }
+        // 声明两个指针，以及两个新的头节点
+        ListNode odd = head;
+        ListNode even = head.next;
+        ListNode evenHead = even;
+
+        while (even != null && even.next != null){
+            odd.next = even.next;
+            odd = odd.next;
+            even.next = odd.next;
+            even  = even.next;
+        }
+        odd.next = evenHead;
+
+        return head;
+    }
+
+    /**
+     * 从0,1,2,...,n这n+1个数中选择n个数，找出这n个数中缺失的那个数，要求O(n)尽可能小
+     *
+     * 思路1、和上一个问题类似，我们把这n个数索引到对应的位置上，然后检查哪个位置上有缺失的数字,
+     * 但是上面的思路存在一个问题，就是如果把0索引到对应的位置上，所以我们可以使用一个变量，存储
+     * 数组中的最小元素，如果最小元素大于0，那么就直接返回0就可以了，对于0不做移动，其余其他数字，都
+     * 将其移动到对应的索引位置上。
+     *
+     * 思路2、因为题目中保证了数组a中的是从0-n中选出的n个，因此每个数字仅出现了一次，那么可以分别求出
+     * a数组的所有数组和，用0-n的和减去a数组的和就可以得出最后的结果
+     *
+     * 思路3、如果a中的数字有序的话，那么就可以使用二分查找来进行寻找这个中间缺少的数字
+     */
+    public int solve (int[] a) {
+        if (a == null || a.length == 0){
+            return 0;
+        }
+        // 1、 对数组中的数据进行移动
+//        // 获取数组中的最小值，以及移动数字到嘴硬的索引位置上
+//        for (int i = 0; i < a.length; i++) {
+//            if (a[i] > 0){
+//                swap(a,i,a[i]-1);
+//            }
+//        }
+//
+//        // 遍历数组，寻找到缺失的数字
+//        for (int i = 0; i < a.length; i++){
+//            if (a[i] != i+1){
+//                return i+1;
+//            }
+//        }
+//        return 0;
+        // 3、对顺序的数组进行二分查找
+        int l = 0, r = a.length-1;
+        while (l <= r){
+            int m = (l+r)/2;
+            if (a[m] == m){
+                l = m+1;
+            }else {
+                r = m-1;
+            }
+        }
+
+        return l;
+    }
+
+    private void swap(int[] nums, int i, int j){
+        int tmp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = tmp;
     }
 
     /**
