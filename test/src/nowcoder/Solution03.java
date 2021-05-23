@@ -14,7 +14,127 @@ public class Solution03 {
 
     @Test
     public void test(){
-        System.out.println(solve(new int[] {1,2,3}));
+        System.out.println(reverse(-123));
+    }
+
+    /**
+     * 有一个NxN整数矩阵，请编写一个算法，将矩阵顺时针旋转90度。
+     *
+     * 给定一个NxN的矩阵，和矩阵的阶数N,请返回旋转后的NxN矩阵,保证N小于等于300。
+     *
+     * 思路：对于矩阵中的任意位置上的元素mat[i][j],其旋转之后的位置为mat[j][n-i],
+     * 我们可以一层一层的处理矩阵中的元素，直至处理完所有的元素，时间复杂度为O(n^2)
+     */
+    public int[][] rotateMatrix(int[][] mat, int n) {
+        if (mat == null || mat.length == 0 || mat[0].length == 0){
+            return mat;
+        }
+//        int[][] tmp = new int[n][n];
+//        for (int i = 0; i < n; i++){
+//            for (int j = 0; j < n; j++){
+//                tmp[j][n-i-1] = mat[i][j];
+//            }
+//        }
+//        return tmp;
+
+        int row = 0, col = n-1;
+        while (row <= col){
+            // 对这些数组进行旋转，转移
+            for (int i = row; i < col; i++){
+                int t1, t2;
+                // 当前定位到的元素为 row, i
+                t1 = mat[i][n-row-1];
+                mat[i][n-row-1] = mat[row][i];
+                // 当前的目标位置为 i, n-row-1
+                t2 = mat[n-row-1][n-i-1];
+                mat[n-row-1][n-i-1] = t1;
+                // 当前的目标位置为 n-row-1, n-i-1
+                t1 = mat[n-i-1][row];
+                mat[n-i-1][row] = t2;
+                // 当前的目标位置为 n-i-1,row
+                mat[row][i] = t1;
+            }
+            row++;
+            col--;
+        }
+
+        return mat;
+    }
+
+    /**
+     * 将给出的32位整数x翻转。
+     * 例1:x=123，返回321
+     * 例2:x=-123，返回-321
+     *
+     * 你有注意到翻转后的整数可能溢出吗？因为给出的是32位整数，
+     * 则其数值范围为[−2^31, 2^31 − 1]。翻转可能会导致溢出，如果反转后的结果会溢出就返回 0。
+     *
+     * 思路：1、首先记录下这个数字的符号位，是正还是负
+     */
+    public int reverse (int x) {
+        int sign = x >= 0 ? 1 : -1;
+
+        // 对x为Integet.MIN_VALUE的情况需要单独进行处理
+        if (x == Integer.MIN_VALUE){
+            return 0;
+        }
+        int res = 0;
+        if (x > 0){
+            x = -x;
+        }
+        while ( x > 0){
+            // 处理溢出
+            if (res > Integer.MAX_VALUE/10 || (res == Integer.MAX_VALUE/10 &&
+                        Integer.MAX_VALUE%10 <= x%10)){
+                return sign == 1 ? Integer.MAX_VALUE : Integer.MIN_VALUE;
+            }
+            res = res * 10 + x % 10;
+            x /= 10;
+        }
+        return res*sign;
+    }
+
+    /**
+     * 实现函数 atoi 。函数的功能为将字符串转化为整数
+     * 提示：仔细思考所有可能的输入情况。这个问题没有给出输入的限制，你需要自己考虑所有可能的情况。
+     *
+     * 思路：去除字符串的前后的所有空格，然后记录下其正负号，然后再对后面的数字进行转换，注意对int类型
+     * 溢出的处理
+     */
+    public int atoi (String str) {
+        String s;
+        if (str == null || (s = str.trim()).length() == 0){
+            return 0;
+        }
+
+        int sign = 1;
+        int index = 0;
+
+        // 对符号位进行判断
+        if (s.charAt(index) == '+'){
+            sign = 1;
+            index++;
+        }
+        if (s.charAt(index) == '-'){
+            sign = -1;
+            index++;
+        }
+
+        int res = 0;
+        while (index < s.length()){
+            // 处理非法的值
+            if (s.charAt(index) < '0' || s.charAt(index) > '9'){
+                break;
+            }
+            // 处理int溢出
+            if (res > Integer.MAX_VALUE/10 || (res == Integer.MAX_VALUE/10
+                    && Integer.MAX_VALUE%10 <= s.charAt(index)-'0')){
+                return sign == 1 ? Integer.MAX_VALUE : Integer.MIN_VALUE;
+            }
+            res = res * 10 + s.charAt(index)-'0';
+            index++;
+        }
+        return sign*res;
     }
 
     /**
