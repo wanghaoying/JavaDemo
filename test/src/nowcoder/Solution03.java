@@ -14,7 +14,104 @@ public class Solution03 {
 
     @Test
     public void test(){
-        System.out.println(reverse(-123));
+        System.out.println(generateParenthesis(3));
+    }
+
+    /**
+     * 给出n对括号，请编写一个函数来生成所有的由n对括号组成的合法组合。
+     * 例如，给出n=3，解集为：
+     * "((()))", "(()())", "(())()", "()()()", "()(())"
+     *
+     * 思路：如果现在还有待匹配的左括号，那么既可以选择添加左括号也可以选择添加右括号，
+     *
+     */
+    ArrayList<String> result = new ArrayList<>();
+    public ArrayList<String> generateParenthesis (int n) {
+        if (n <= 0){
+            return new ArrayList<>();
+        }
+        int unmatch = 0 ,left = n , right = n;
+        generate("",unmatch,left,right);
+
+        return result;
+    }
+
+    private void generate(String s,int unmatch,int left, int right){
+        if (right == 0){
+            result.add(s);
+            return;
+        }
+
+        if (unmatch == 0){
+            generate(s+"(",1,left-1,right);
+            return;
+        }else {
+            if (left > 0){
+                generate(s+"(",unmatch+1,left-1,right);
+                generate(s+")",unmatch-1,left,right-1);
+            }else {
+                generate(s+")",unmatch-1,left,right-1);
+            }
+        }
+    }
+
+    /**
+     * 给定一棵二叉树，判断其是否是自身的镜像（即：是否对称）
+     * 例如：下面这棵二叉树是对称的
+     * {1,2,2},true
+     * {1,2,3,3,#,2,#},false
+     *
+     * 思路：如果左右子节点的value相同，且左右子节点能在对应位置一一对应的话，那么就是镜像的
+     */
+    public boolean isSymmetric (TreeNode root) {
+        if (root == null){
+            return true;
+        }
+        return isSymmetric(root.left,root.right);
+    }
+
+    private boolean isSymmetric(TreeNode node1, TreeNode node2){
+        if (node1 == null && node2 == null){
+            return true;
+        }
+        if (node1 == null || node2 == null){
+            return false;
+        }
+
+        if (node1.val == node2.val){
+            return isSymmetric(node1.left, node2.right) && isSymmetric(node1.right, node2.left);
+        }
+        return false;
+    }
+
+    /**
+     * 给定一个二叉树，请计算节点值之和最大的路径的节点值之和是多少。
+     * 这个路径的开始节点和结束节点可以是二叉树中的任意节点
+     *
+     * 例如：{-2,1} -> 1;    {1,2,3} -> 6
+     *
+     * 思路：我们观察一个节点，这个节点所能构成的最大的路径，在于，其左子树的贡献是否是大于0的，以及
+     * 右子树对结果的贡献度是否是大于0的
+     */
+    int res = Integer.MIN_VALUE;
+    public int maxPathSum (TreeNode root) {
+        getMax(root);
+        return res;
+    }
+
+    private int getMax(TreeNode root){
+        if (root == null){
+            return 0;
+        }
+
+        int left = Math.max(0,getMax(root.left));
+        int right = Math.max(0,getMax(root.right));
+        int tmp = root.val + left + right;
+
+        res = Math.max(res,tmp);
+
+        // 注意，这里在向上层抛贡献度的时候，只能选择走一条路
+        return root.val + Math.max(left,right);
     }
 
     /**
