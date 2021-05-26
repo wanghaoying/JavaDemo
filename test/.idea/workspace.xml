@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="970689e3-fb52-4195-987c-0d0fb329242c" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../LoginAndAuthDemo/springsecuritydemo1/src/main/java/com/wanghaoying/springsecuritydemo1/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../LoginAndAuthDemo/springsecuritydemo1/src/main/java/com/wanghaoying/springsecuritydemo1/config/SecurityConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/nowcoder/Solution03.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/nowcoder/Solution03.java" afterDir="false" />
     </list>
@@ -107,6 +108,7 @@
       <workItem from="1621561119416" duration="5000" />
       <workItem from="1621566169031" duration="9512000" />
       <workItem from="1621737160445" duration="14392000" />
+      <workItem from="1621992115707" duration="5050000" />
     </task>
     <servers />
   </component>
@@ -118,10 +120,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="414" y="175" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1620480620172" />
-    <state x="533" y="184" key="#com.intellij.ide.util.MemberChooser" timestamp="1621062749447">
+    <state x="533" y="184" key="#com.intellij.ide.util.MemberChooser" timestamp="1621996498221">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
-    <state x="533" y="184" key="#com.intellij.ide.util.MemberChooser/0.23.1440.877@0.23.1440.877" timestamp="1621062749447" />
+    <state x="533" y="184" key="#com.intellij.ide.util.MemberChooser/0.23.1440.877@0.23.1440.877" timestamp="1621996498221" />
     <state width="1398" height="229" key="GridCell.Tab.0.bottom" timestamp="1621841278369">
       <screen x="0" y="23" width="1440" height="877" />
     </state>

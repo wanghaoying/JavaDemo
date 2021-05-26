@@ -5,7 +5,7 @@ import org.junit.Test;
 import java.util.*;
 
 /**
- * 刷题的第四个文件，NC12 ~ NC
+ * 刷题的第四个文件，NC12 ~ NC94
  */
 public class Solution03 {
     public static void main(String[] args) {
@@ -14,7 +14,117 @@ public class Solution03 {
 
     @Test
     public void test(){
-        System.out.println(generateParenthesis(3));
+
+    }
+
+    /**
+     * 一个缓存结构需要实现如下功能。
+     * set(key, value)：将记录(key, value)插入该结构
+     * get(key)：返回key对应的value值
+     * 但是缓存结构中最多放K条记录，如果新的第K+1条记录要加入，就需要根据策略删掉一条记录，
+     * 然后才能把新记录加入。
+     * 这个策略为：在缓存结构的K条记录中，哪一个key从进入缓存结构的时刻开始，
+     * 被调用set或者get的次数最少，就删掉这个key的记录；
+     *
+     * 如果调用次数最少的key有多个，上次调用发生最早的key被删除
+     * 这就是LFU缓存替换算法。实现这个结构，K作为参数给出
+     * [要求]
+     * set和get方法的时间复杂度为O(1)
+     *
+     * 思路：这个要求我们的set方法 和 get方法的复杂度均为o(1)，那么我们的底层数据结构实现就参考
+     * hashmap，而且这里面相同调用次数的节点需要按照调用顺序来进行排序，那么就需要一个linkedList
+     * 的结构
+     *
+     * 但是存在一个问题，就是我们需要在容量满了的情况下，如何快速找到使用次数最少的key，而且使用次数相同的
+     * key，按照其发生调用的时间来进行排序，那么我们可以对使用次数相同的key，使用一个linkedList串
+     * 起来，使得前面位置的是使用时间最久的，而且我们要为不用的使用次数，挂上一个不同的linkedList，
+     * 在发生访问调用的时候，可以实现节点的移动。那么对于get方法，我们可能要使用另外一个hashmap，
+     * 以key为key，然后这个value中需要存储该key被访问次数
+     */
+    public int[] LFU (int[][] operators, int k) {
+        if (operators == null || operators.length == 0 || operators[0].length == 0){
+            return new int[] {};
+        }
+        // 声明变量用来存储最大容量，以及当前环境中的对key访问的最小的次数
+        int capacity = k;
+        int minFreq = 0;
+        // 声明两个hashmap，一个用来存储key-value，另一个被访问次数相同的节点的list
+        HashMap<Integer,Node> hashMap = new HashMap<>();
+        HashMap<Integer,LinkedList<Node>> freqHashMap = new HashMap<>();
+
+        // 声明最后的结果集
+        ArrayList<Integer> result = new ArrayList<>();
+        int index = 0;
+
+        for (int[] operator : operators) {
+            int res = 0;
+            if (hashMap.containsKey(operator[1])){
+                // 获取到这个key对应的node，然后进行结果包装，以及访问次数更新
+                Node node = hashMap.get(operator[1]);
+                node.freq = node.freq+1;
+
+                if (operator[0] == 1){
+                    node.val = operator[2];
+                }else {
+                    res = node.val;
+                    result.add(res);
+                }
+                // 对这个node在freqHashMap中的访问位置进行调整
+                LinkedList<Node> nodes = freqHashMap.get(node.freq - 1);
+                // 更新minFreq 和 nodes
+                nodes.remove(node);
+                if (nodes.size() == 0 && minFreq == node.freq-1){
+                    minFreq = node.freq;
+                }
+                // 对node所在的linkedlist进行转移
+                if (!freqHashMap.containsKey(node.freq)){
+                    freqHashMap.put(node.freq,new LinkedList<Node>());
+                }
+                freqHashMap.get(node.freq).addLast(node);
+
+            }else if (operator[0] == 1){
+                if (hashMap.size() == capacity){
+                    // 现在需要先删除一个node，然后再进行添加
+                    LinkedList<Node> nodes = freqHashMap.get(minFreq);
+                    Node node = nodes.removeFirst();
+                    hashMap.remove(node.key);
+                }
+                // 现在可以直接进行添加
+                hashMap.put(operator[1],new Node(operator[1],operator[2],1));
+                Node node = hashMap.get(operator[1]);
+                // 对node所在的linkedlist进行转移
+                minFreq = 1;
+                if (!freqHashMap.containsKey(node.freq)){
+                    freqHashMap.put(node.freq,new LinkedList<Node>());
+                }
+                freqHashMap.get(node.freq).addLast(node);
+
+            }else {
+                result.add(-1);
+            }
+        }
+
+        int[] ops = new int[result.size()];
+        for (int i = 0; i < ops.length; i++){
+            ops[i] = result.get(i);
+        }
+        return ops;
+    }
+
+    class Node{
+        int key;
+        int val;
+        int freq;
+
+        public Node(){
+
+        }
+
+        public Node(int key, int val, int freq) {
+            this.key = key;
+            this.val = val;
+            this.freq = freq;
+        }
     }
 
     /**
