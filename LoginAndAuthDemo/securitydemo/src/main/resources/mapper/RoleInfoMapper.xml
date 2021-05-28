@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.securitydemo.auth.dao.RoleInfoMapper">
+    
+    <!--  通用结果包装  -->
+    <resultMap id="BaseResultMap" type="com.example.securitydemo.auth.pojo.RoleInfo">
+        <id column="id" property="id" />
+        <result column="role_name" property="roleName"/>
+        <result column="role_code" property="roleCode" />
+        <result column="role_remark" property="roleRemark"/>
+        <result column="active_status" property="activeStatus"/>
+        <result column="create_time" property="createTime"/>
+    </resultMap>
+    
+    <select id="getRoleInfoByUserId" parameterType="string" resultMap="BaseResultMap">
+        SELECT
+        a.id, a.role_name, a.role_code, a.role_remark, a.active_status, a.create_time
+        FROM role_info as a
+        INNER JOIN user_role_link as b
+        WHERE b.user_id = #{userId} AND a.active_status = 1
+    </select>
+</mapper>
