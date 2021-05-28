@@ -2,9 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="970689e3-fb52-4195-987c-0d0fb329242c" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../LoginAndAuthDemo/springsecuritydemo1/src/main/java/com/wanghaoying/springsecuritydemo1/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../LoginAndAuthDemo/springsecuritydemo1/src/main/java/com/wanghaoying/springsecuritydemo1/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LoginAndAuthDemo/springsecuritydemo2/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../LoginAndAuthDemo/springsecuritydemo2/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LoginAndAuthDemo/springsecuritydemo2/src/main/java/com/wanghaoying/springsecuritydemo2/Springsecuritydemo2Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/../LoginAndAuthDemo/springsecuritydemo2/src/main/java/org/example/security/Springsecuritydemo2Application.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LoginAndAuthDemo/springsecuritydemo2/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../LoginAndAuthDemo/springsecuritydemo2/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LoginAndAuthDemo/springsecuritydemo2/src/test/java/com/wanghaoying/springsecuritydemo2/Springsecuritydemo2ApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/../LoginAndAuthDemo/springsecuritydemo2/src/test/java/org/example/security/Springsecuritydemo2ApplicationTests.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/nowcoder/Solution03.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/nowcoder/Solution03.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/test/test/nowcoder/Solution03$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/test/test/nowcoder/Solution03$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/test/test/nowcoder/Solution03$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/test/test/nowcoder/Solution03$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/test/test/nowcoder/Solution03$Interval.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/test/test/nowcoder/Solution03$Interval.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/test/test/nowcoder/Solution03$ListNode.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/test/test/nowcoder/Solution03$ListNode.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/test/test/nowcoder/Solution03$TreeNode.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/test/test/nowcoder/Solution03$TreeNode.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/test/test/nowcoder/Solution03.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/test/test/nowcoder/Solution03.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test.iml" beforeDir="false" afterPath="$PROJECT_DIR$/test.iml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,12 +47,25 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="project.structure.last.edited" value="Facets" />
+    <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
-    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
   </component>
-  <component name="RunManager" selected="JUnit.Solution03.test">
+  <component name="RunManager" selected="JUnit.Solution04.test">
+    <configuration name="Solution04" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="nowcoder.Solution04" />
+      <module name="test" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="nowcoder.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Solution02.test" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="test" />
       <option name="PACKAGE_NAME" value="nowcoder" />
@@ -70,8 +92,26 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="Solution04.test" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="test" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="nowcoder.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="nowcoder" />
+      <option name="MAIN_CLASS_NAME" value="nowcoder.Solution04" />
+      <option name="METHOD_NAME" value="test" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.Solution04.test" />
+        <item itemvalue="Application.Solution04" />
         <item itemvalue="JUnit.Solution03.test" />
         <item itemvalue="JUnit.Solution02.test" />
       </list>
@@ -108,7 +148,9 @@
       <workItem from="1621561119416" duration="5000" />
       <workItem from="1621566169031" duration="9512000" />
       <workItem from="1621737160445" duration="14392000" />
-      <workItem from="1621992115707" duration="5050000" />
+      <workItem from="1621992115707" duration="6050000" />
+      <workItem from="1622042520363" duration="12467000" />
+      <workItem from="1622100369576" duration="276000" />
     </task>
     <servers />
   </component>
@@ -120,33 +162,33 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="414" y="175" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1620480620172" />
-    <state x="533" y="184" key="#com.intellij.ide.util.MemberChooser" timestamp="1621996498221">
+    <state x="533" y="184" key="#com.intellij.ide.util.MemberChooser" timestamp="1622086537271">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
-    <state x="533" y="184" key="#com.intellij.ide.util.MemberChooser/0.23.1440.877@0.23.1440.877" timestamp="1621996498221" />
-    <state width="1398" height="229" key="GridCell.Tab.0.bottom" timestamp="1621841278369">
+    <state x="533" y="184" key="#com.intellij.ide.util.MemberChooser/0.23.1440.877@0.23.1440.877" timestamp="1622086537271" />
+    <state width="1398" height="229" key="GridCell.Tab.0.bottom" timestamp="1622092477580">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state width="1877" height="276" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1621402182472" />
-    <state width="1398" height="229" key="GridCell.Tab.0.bottom/0.23.1440.877@0.23.1440.877" timestamp="1621841278369" />
+    <state width="1398" height="229" key="GridCell.Tab.0.bottom/0.23.1440.877@0.23.1440.877" timestamp="1622092477580" />
     <state width="1878" height="289" key="GridCell.Tab.0.bottom/0.23.1920.1057@0.23.1920.1057" timestamp="1621305276322" />
-    <state width="1398" height="229" key="GridCell.Tab.0.center" timestamp="1621841278368">
+    <state width="1398" height="229" key="GridCell.Tab.0.center" timestamp="1622092477579">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state width="1877" height="276" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1621402182472" />
-    <state width="1398" height="229" key="GridCell.Tab.0.center/0.23.1440.877@0.23.1440.877" timestamp="1621841278368" />
+    <state width="1398" height="229" key="GridCell.Tab.0.center/0.23.1440.877@0.23.1440.877" timestamp="1622092477579" />
     <state width="1878" height="289" key="GridCell.Tab.0.center/0.23.1920.1057@0.23.1920.1057" timestamp="1621305276320" />
-    <state width="1398" height="229" key="GridCell.Tab.0.left" timestamp="1621841278367">
+    <state width="1398" height="229" key="GridCell.Tab.0.left" timestamp="1622092477578">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state width="1877" height="276" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1621402182472" />
-    <state width="1398" height="229" key="GridCell.Tab.0.left/0.23.1440.877@0.23.1440.877" timestamp="1621841278367" />
+    <state width="1398" height="229" key="GridCell.Tab.0.left/0.23.1440.877@0.23.1440.877" timestamp="1622092477578" />
     <state width="1878" height="289" key="GridCell.Tab.0.left/0.23.1920.1057@0.23.1920.1057" timestamp="1621305276319" />
-    <state width="1398" height="229" key="GridCell.Tab.0.right" timestamp="1621841278368">
+    <state width="1398" height="229" key="GridCell.Tab.0.right" timestamp="1622092477579">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state width="1877" height="276" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1621402182472" />
-    <state width="1398" height="229" key="GridCell.Tab.0.right/0.23.1440.877@0.23.1440.877" timestamp="1621841278368" />
+    <state width="1398" height="229" key="GridCell.Tab.0.right/0.23.1440.877@0.23.1440.877" timestamp="1622092477579" />
     <state width="1878" height="289" key="GridCell.Tab.0.right/0.23.1920.1057@0.23.1920.1057" timestamp="1621305276321" />
     <state width="1398" height="392" key="GridCell.Tab.1.bottom" timestamp="1621504943942">
       <screen x="0" y="23" width="1440" height="877" />
@@ -172,10 +214,14 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="704" y="221" key="RollbackChangesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1620469441246" />
-    <state x="208" y="43" key="SettingsEditor" timestamp="1621492178139">
+    <state x="208" y="43" key="SettingsEditor" timestamp="1622044155960">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
-    <state x="208" y="43" key="SettingsEditor/0.23.1440.877@0.23.1440.877" timestamp="1621492178139" />
+    <state x="208" y="43" key="SettingsEditor/0.23.1440.877@0.23.1440.877" timestamp="1622044155960" />
+    <state width="1334" height="877" key="com.intellij.byteCodeViewer.ShowByteCodeAction" timestamp="1622077102158">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state width="1334" height="877" key="com.intellij.byteCodeViewer.ShowByteCodeAction/0.23.1440.877@0.23.1440.877" timestamp="1622077102158" />
     <state x="399" y="294" key="com.intellij.ide.util.TipDialog" timestamp="1621419354767">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
@@ -196,11 +242,11 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="616" y="240" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1620268013638" />
-    <state x="467" y="213" width="670" height="572" key="search.everywhere.popup" timestamp="1621676208600">
+    <state x="467" y="213" width="670" height="572" key="search.everywhere.popup" timestamp="1622000273804">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1620713226519" />
-    <state x="467" y="213" width="670" height="572" key="search.everywhere.popup/0.23.1440.877@0.23.1440.877" timestamp="1621676208600" />
+    <state x="467" y="213" width="670" height="572" key="search.everywhere.popup/0.23.1440.877@0.23.1440.877" timestamp="1622000273804" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>
