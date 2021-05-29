@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-// 这里必须要重新定义Bean的id吗？ 待测试
+// 这里必须要重新定义Bean的id吗？ 待测试，在login方法暴露出去的情况下，这个方法，是否还有必要
 @Service("userDetailsService")
 public class CustomUserService implements UserDetailsService {
     @Autowired
@@ -27,15 +27,19 @@ public class CustomUserService implements UserDetailsService {
     @Autowired
     private AuthenticationManager authenticationManager;
 
-    // 根据用户名来获取用户的相关信息
+    /**
+     * 根据用户名来获取用户的相关信息，返回一个userDetails对象
+     *
+     * @throws UsernameNotFoundException
+     */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         UserInfo userInfo = userInfoService.getUserByName(username);
-        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken
-                = new UsernamePasswordAuthenticationToken(userInfo.getUsername(),userInfo.getPassword());
-        authenticationManager.authenticate(usernamePasswordAuthenticationToken);
+        if (userInfo == null){
+            throw new UsernameNotFoundException("登陆失败，用户名不存在！");
+        }
 
-        // 如果用户名密码认证没有问题，对userDetail进行包装
+        // 对userDetail进行包装
         UserDetail userDetail = new UserDetail();
         userDetail.setUserInfo(userInfo);
         // 获取该用户的权限信息

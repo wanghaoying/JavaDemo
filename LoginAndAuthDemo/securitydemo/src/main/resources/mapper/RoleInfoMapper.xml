@@ -19,4 +19,12 @@
         INNER JOIN user_role_link as b
         WHERE b.user_id = #{userId} AND a.active_status = 1
     </select>
+
+    <select id="getRoleInfoByPermissionId" parameterType="string" resultMap="BaseResultMap">
+        SELECT
+        a.id, a.role_name, a.role_code, a.role_remark, a.active_status, a.create_time
+        FROM role_info AS a
+        INNER JOIN role_permission_link AS b
+        WHERE b.permission_id = #{permissionId} AND a.active_status= 1
+    </select>
 </mapper>
