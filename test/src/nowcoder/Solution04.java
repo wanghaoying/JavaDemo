@@ -19,8 +19,131 @@ public class Solution04 {
 
     @Test
     public void test(){
-        ArrayList<ArrayList<Integer>> arrayLists = permuteUnique(new int[]{1, 1, 2});
-        System.out.println(arrayLists);
+        System.out.println(search(new int[] {1,2,4,4,5},4));
+    }
+
+    /**
+     * 给定一个二叉树和一个值 sum，判断是否有从根节点到叶子节点的节点值之和等于sum 的路径，
+     * 例如：
+     * 给出如下的二叉树，sum=3，
+     * {1,2},3  --> true
+     *
+     * 思路：寻找左右子树中有没有等于 sum-root.val 的路径
+     */
+    public boolean hasPathSum (TreeNode root, int sum) {
+        if (root == null){
+            return false;
+        }
+
+        if (root.left == null && root.right == null){
+            return root.val == sum;
+        }
+
+        return hasPathSum(root.left,sum - root.val) ||
+                hasPathSum(root.right, sum - root.val);
+    }
+
+    /**
+     * 一座大楼有层，地面算作第0层，最高的一层为第 n 层。已知棋子从第0层掉落肯定不会摔碎，
+     * 从第i层掉落可能会摔碎，也可能不会摔碎。 (1<=i<=n)
+     * 给定整数n作为楼层数，再给定整数k作为棋子数，返回如果想找到棋子不会摔碎的最高层数，
+     * 即使在最差的情况下扔的最小次数。一次只能扔一个棋子。
+     *
+     * 思路： 不会
+     */
+    public int solve (int n, int k) {
+        // write code here
+        return 0;
+    }
+
+    /**
+     * 请实现有重复数字的升序数组的二分查找
+     * 给定一个 元素有序的（升序）整型数组 nums 和一个目标值 target  ，
+     * 写一个函数搜索 nums 中的 target，如果目标值存在返回下标，否则返回 -1
+     *
+     * 思路：因为是有重复数字的，那么当我们要抄着的target刚好是一个重复出现的数字的时候，我们需要
+     * 返回的是他第一次出现的位置。那么如果我们通过二分查找到某一个元素的时候，我们并不能确定他
+     * 是否是第一次出现的位置，所以我们需要围绕这个问题进行一些改进
+     *
+     */
+    public int search (int[] nums, int target) {
+        if (nums == null || nums.length == 0){
+            return -1;
+        }
+
+        int left = 0, right = nums.length-1;
+        while (left <= right){
+            int mid = (left+right)/2;
+            if (nums[mid] < target){
+                left = mid+1;
+            }else if (nums[mid] > target){
+                right = mid-1;
+            }else
+                // 对mid处的值为target的情况的特殊处理
+                if (right - left <= 1){
+                    return left;
+                }else {
+                    right = mid;
+                }
+        }
+        return -1;
+    }
+
+    /**
+     * 给定一个数组和滑动窗口的大小，找出所有滑动窗口里数值的最大值。例如，
+     * 如果输入数组{2,3,4,2,6,2,5,1}及滑动窗口的大小3，那么一共存在6个滑动窗口，
+     * 他们的最大值分别为{4,4,6,6,6,5}；
+     *
+     * 针对数组{2,3,4,2,6,2,5,1}的滑动窗口有以下6个：
+     * {[2,3,4],2,6,2,5,1}， {2,[3,4,2],6,2,5,1}， {2,3,[4,2,6],2,5,1}，
+     * {2,3,4,[2,6,2],5,1}， {2,3,4,2,[6,2,5],1}， {2,3,4,2,6,[2,5,1]}。
+     *
+     * 窗口大于数组长度的时候，返回空
+     *
+     * 思路：
+     * 1、暴力寻找，使用两个指针来标识窗口的边界，然后对寻找这个窗口内的最大值；然后继续移动到
+     * 下一个窗口的位置，循环如此。 时间复杂度为o(n^2)
+     *
+     * 2、我们可以注意到这么一个事实：
+     *       第i个位置上的数字比第j个位置上的数字小，那么只要i和j在一个窗口中，那么一定有
+     *  最大值可能在j位置上取得，并保证一定不会在i位置上取得。
+     *       所以我们可以使用一个双端队列来完善我们的思路：如果较大的数字后面进来一个较小的数字，
+     *  那么在窗口滑动的过程中，可能会取到这个较小的数字；如果一个较小的数字后面进来一个较大的
+     *  数字，那么在后续滑动的过程中，一定不会取到这个较小的数字
+     */
+    public ArrayList<Integer> maxInWindows(int [] num, int size) {
+        if (num == null || num.length < size || num.length == 0 || size == 0){
+            return new ArrayList<>();
+        }
+        // 初始化一个双端队列
+        Deque<Integer> deque = new LinkedList<>();
+        ArrayList<Integer> arrayList = new ArrayList<>();
+
+        // 先将前三个数字插入进队列中
+        for (int i= 0 ; i < size; i++){
+            while (!deque.isEmpty() && deque.peekLast() < num[i]){
+                deque.pollLast();
+            }
+            deque.offerLast(num[i]);
+        }
+        // 处理后面的数字
+        int i = 0, j = size;
+        while (j < num.length){
+            // 判断是否抛出左端元素
+            arrayList.add(deque.peekFirst());
+            if (num[i] == deque.peekFirst()){
+                deque.pollFirst();
+            }
+            // 对新加入的数字进行处理
+            while (!deque.isEmpty() && deque.peekLast() < num[j]){
+                deque.pollLast();
+            }
+            deque.offerLast(num[j++]);
+            i++;
+        }
+        arrayList.add(deque.peekFirst());
+
+        return arrayList;
     }
 
     /**
@@ -219,6 +342,25 @@ public class Solution04 {
         public ListNode(int val, ListNode next) {
             this.val = val;
             this.next = next;
+        }
+    }
+
+    class TreeNode{
+        int val;
+        TreeNode left;
+        TreeNode right;
+
+        public TreeNode() {
+        }
+
+        public TreeNode(int val) {
+            this.val = val;
+        }
+
+        public TreeNode(int val, TreeNode left, TreeNode right) {
+            this.val = val;
+            this.left = left;
+            this.right = right;
         }
     }
 }
