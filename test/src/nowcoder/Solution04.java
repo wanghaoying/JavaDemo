@@ -1,8 +1,6 @@
 package nowcoder;
 
 import org.junit.Test;
-import org.omg.PortableInterceptor.INACTIVE;
-
 import java.util.*;
 
 /**
@@ -19,7 +17,103 @@ public class Solution04 {
 
     @Test
     public void test(){
-        System.out.println(search(new int[] {1,2,4,4,5},4));
+        System.out.println(solve(10000,10000));
+    }
+
+    /**
+     * 给出一个仅包含字符'('和')'的字符串，计算最长的格式正确的括号子串的长度。
+     * 对于字符串"(()"来说，最长的格式正确的子串是"()"，长度为2.
+     * 再举一个例子：对于字符串")()())",来说，最长的格式正确的子串是"()()"，长度为4.
+     *
+     * 思路：
+     * 1、暴力法：以s中的每一个字符为中心点，类似于中心拓展算法，然后计算向两边拓展得到的
+     * 最长符合格式的子串的长度，时间复杂度为o(n^2)
+     *
+     * 2、使用一个堆栈：我们在上面的暴力法计算的过程中，不难发现有重复子问题的出现，比如一个
+     * 较长的字符串是否是符合格式的子串，总是依赖于去头去尾之后的子串是否是一个符合格式的子串
+     * 那么，我们根据上面的思想，在遇到（的时候，进行入栈操作，在遇到）的时候，进行出栈操作
+     * 并记录当前位置与栈顶元素的位置差值
+     *
+     * 3、类似与中心拓展思想一样，马拉车算法
+     */
+    public int longestValidParentheses (String s) {
+        if (s == null || s.length() == 0){
+            return 0;
+        }
+        // 2、堆栈法，需要对()()()的情况进行判断
+        int max = 0;
+        int left = -1;
+        Stack<Integer> stack = new Stack<>();
+        for (int i = 0 ; i < s.length(); i++){
+            if (s.charAt(i) == '('){
+                stack.push(i);
+            }else {
+                if (stack.isEmpty()){
+                    left = i;
+                }else {
+                    stack.pop();
+                    if (stack.isEmpty()){
+                        max = Math.max(max,i-left);
+                    }else {
+                        max = Math.max(max,i-stack.peek());
+                    }
+                }
+            }
+        }
+        return max;
+    }
+
+    /**
+     * 给出一组候选数 C 和一个目标数 T，找出候选数中起来和等于 T 的所有组合。
+     *  C 中的每个数字在一个组合中只能使用一次。
+     * 注意：
+     * 题目中所有的数字（包括目标数 T ）都是正整数
+     * 组合中的数字 (a_1, a_2, … , a_k) 要按非递增排序
+     * 结果中不能包含重复的组合
+     * 组合之间的排序按照索引从小到大依次比较，小的排在前面，如果索引相同的情况下数值相同，
+     * 则比较下一个索引。
+     *
+     * 思路：dfs遍历寻找
+     */
+    public ArrayList<ArrayList<Integer>> combinationSum2(int[] num, int target) {
+        if (num == null || num.length == 0){
+            return new ArrayList<>();
+        }
+        Arrays.sort(num);
+        ArrayList<ArrayList<Integer>> arrayLists = new ArrayList<>();
+        generateCombination(arrayLists, new ArrayList<>(),num, target, 0);
+        return arrayLists;
+    }
+    // 根绝dfs的思想来生成所有的结果
+    private void generateCombination(ArrayList<ArrayList<Integer>> arrayLists,
+                                     ArrayList<Integer> arrayList,
+                                     int[] nums, int target, int index){
+        // 对符合条件的结果加入到最终的结果集中
+        if (target == 0 && !arrayLists.contains(arrayList)){
+            arrayLists.add(new ArrayList<>(arrayList));
+            return;
+        }
+        // 对特殊情况的判断
+        if (index >= nums.length){
+            return;
+        }
+
+        // 将i数据加入arrayList 的情况
+        for (int i = index; i < nums.length; i++){
+            if (nums[i] > target){
+                return;
+            }
+            arrayList.add(nums[i]);
+            generateCombination(arrayLists,arrayList,nums,target-nums[i],i+1);
+            arrayList.remove(arrayList.size()-1);
+        }
+
+        // 不将i数据加入arrayList 的情况
+        int i = index;
+        while (i < nums.length && nums[i] == nums[index]){
+            i++;
+        }
+        generateCombination(arrayLists,arrayList,nums,target,i);
     }
 
     /**
@@ -49,11 +143,70 @@ public class Solution04 {
      * 给定整数n作为楼层数，再给定整数k作为棋子数，返回如果想找到棋子不会摔碎的最高层数，
      * 即使在最差的情况下扔的最小次数。一次只能扔一个棋子。
      *
-     * 思路： 不会
+     * 链接：https://www.cnblogs.com/willwuss/p/12256475.html
+     *
+     * 思路：
+     * 1、暴力法：对于上面的问题，我们可以作出如下的推论：
+     *    我们用p(i,j)来表示，i层楼高，以及j颗棋子的情况下，扔的最小次数
+     *    1）、那么可以得出 p(0,j) = 0, p(i,1) = i
+     *    2）、对于i>1, j>1的情况，我们可以假设其在e这个位置上进行第一次扔，那么就有两种情况
+     *        I、碎了， p(i,j) = p(i-1,j-1) + 1
+     *        II、没碎， p(i,j) = p(N-i,j) +1
+     *      因此，p(i,j) = max(p(i-1,j-1),p(N-i,j))+1
+     *
+     *    又因为要计算最小的次数，所以
+     *    p(n,k) = min{max(p(i-1,k-1) , p(n-i,k)) + 1 }  1<=i <= n
+     *
+     *    但是上面问题的时间复杂度为O(n!)，时间复杂度非常的高
+     *
+     * 2、动态规划：
+     *      在上面的方法中，时间复杂度太高，我们发现会有大量的重复子问题被进行求解，所以我们
+     *  可以使用动态规划来进行求解，使用一个状态表来记录下已经计算过的dp[i,j]的数值，下次获取
+     *  的时候可以直接去其中进行获取，避免了大量的重复计算，时间复杂度为O(n^2*k)
+     *
+     * 3、优化后的动态规划：
+     *      上面的方法在提交的过程中发生内存超出限制。
+     *      但是我们在观察我们的递推公式的时候，发现每次参与计算的都是j-1列 和 j列，那么我们
+     *  就可以每次只保留第k列 和 第 k-1列，从而降低我们的存储复杂度
+     *      时间复杂度仍然为O(n^2*k) 超出时间限制
      */
     public int solve (int n, int k) {
-        // write code here
-        return 0;
+        if (n < 1 || k < 1){
+            return 0;
+        }
+        return compute(n,k);
+    }
+
+    private int compute(int n, int k){
+        // 递归结束条件的判断
+        if (n == 0){
+            return 0;
+        }
+        if (k == 1){
+            return n;
+        }
+
+        // 声明状态表，并进行初始化棋子个数为1的列
+        int[] prev = new int[n+1];
+        int[] curr = new int[n+1];
+        for (int i = 0; i <= n; i++){
+            curr[i] = i;
+        }
+
+        // 以k为最外层开始遍历
+        for (int i = 1; i < k; i++){
+            int[] tmp = prev;
+            prev = curr;
+            curr = tmp;
+            for (int j = 1; j <= n; j++){
+                int min = Integer.MAX_VALUE;
+                for (int o = 1; o <= j; o++){
+                    min = Math.min(min,Math.max(prev[o-1],curr[j-o])+1);
+                }
+                curr[j] = min;
+            }
+        }
+        return curr[n];
     }
 
     /**
