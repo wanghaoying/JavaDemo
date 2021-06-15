@@ -17,7 +17,68 @@ public class Solution04 {
 
     @Test
     public void test(){
-        System.out.println(solve(10000,10000));
+        System.out.println(longestCommonPrefix(new String[]{
+                "abca","abc","abca","abc","abcc"
+        }));
+    }
+
+    /**
+     * 在不使用额外的内存空间的条件下判断一个整数是否是回文数字
+     * 提示：
+     * 负整数可以是回文吗？（比如-1）
+     * 如果你在考虑将数字转化为字符串的话，请注意一下不能使用额外空间的限制
+     * 你可以将整数翻转。但是，如果你做过题目“反转数字”，你会知道将整数翻转可能会出现溢出的情况，你怎么处理这个问题？
+     *
+     * 思路：
+     * 1、整数翻转，如果发生溢出则表示不是回文数字？
+     *
+     * 2、
+     *
+     */
+    public boolean isPalindrome (int x) {
+        // write code here
+    }
+
+    /**
+     * 编写一个函数来查找字符串数组中的最长公共前缀。
+     *
+     * 思路：
+     * 1、暴力法：依次遍历所有strs中的元素，然后依次比对各个位置上的字符是否一致，时间复杂度为O(n*m)
+     *
+     *
+     * @author W.H
+     */
+    public String longestCommonPrefix (String[] strs) {
+        if (strs == null || strs.length == 0){
+            return "";
+        }
+        if (strs.length == 1){
+            return strs[0];
+        }
+
+        StringBuilder sb = new StringBuilder();
+        boolean flag = true;
+        int index = 0;
+        while (flag){
+            if (strs[0].length() <= index){
+                break;
+            }
+
+            char c = strs[0].charAt(index);
+
+            for (String str : strs){
+                if (str.length() <= index || str.charAt(index) != c){
+                    flag = false;
+                    break;
+                }
+            }
+            if (flag){
+                sb.append(c);
+            }
+            index++;
+        }
+
+        return sb.toString();
     }
 
     /**
