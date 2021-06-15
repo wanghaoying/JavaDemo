@@ -3,6 +3,9 @@ package com.example.securitydemo.util.tools;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+
 /**
  * 对结果信息的封装类。
  * 结果包括三个部分：状态码、状态码描述、返回数据
@@ -10,9 +13,10 @@ import lombok.RequiredArgsConstructor;
  * @author W.H
  */
 @Data
-@RequiredArgsConstructor()
 public class Result<T> {
+    @Positive
     private int code;
+    @NotNull
     private String msg;
     private T data;
 
