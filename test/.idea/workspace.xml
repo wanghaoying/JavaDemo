@@ -2,17 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="970689e3-fb52-4195-987c-0d0fb329242c" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../Java.xmind" beforeDir="false" afterPath="$PROJECT_DIR$/../Java.xmind" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../LoginAndAuthDemo/securitydemo/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../LoginAndAuthDemo/securitydemo/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../LoginAndAuthDemo/securitydemo/src/main/java/com/example/securitydemo/auth/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../LoginAndAuthDemo/securitydemo/src/main/java/com/example/securitydemo/auth/config/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../LoginAndAuthDemo/securitydemo/src/main/java/com/example/securitydemo/auth/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../LoginAndAuthDemo/securitydemo/src/main/java/com/example/securitydemo/auth/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../LoginAndAuthDemo/securitydemo/src/main/java/com/example/securitydemo/util/tools/CodeMsg.java" beforeDir="false" afterPath="$PROJECT_DIR$/../LoginAndAuthDemo/securitydemo/src/main/java/com/example/securitydemo/util/tools/CodeMsg.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../LoginAndAuthDemo/securitydemo/src/main/java/com/example/securitydemo/util/tools/Result.java" beforeDir="false" afterPath="$PROJECT_DIR$/../LoginAndAuthDemo/securitydemo/src/main/java/com/example/securitydemo/util/tools/Result.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../LoginAndAuthDemo/securitydemo/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../LoginAndAuthDemo/securitydemo/src/main/resources/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/test/nowcoder/Solution04$ListNode.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/test/test/nowcoder/Solution04$ListNode.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/test/nowcoder/Solution04$TreeNode.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/test/test/nowcoder/Solution04$TreeNode.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/test/nowcoder/Solution04.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/test/test/nowcoder/Solution04.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/nowcoder/Solution04.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/nowcoder/Solution04.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -157,7 +147,7 @@
       <workItem from="1622709353426" duration="50000" />
       <workItem from="1622709436075" duration="72000" />
       <workItem from="1622709539716" duration="5338000" />
-      <workItem from="1623767716399" duration="3251000" />
+      <workItem from="1623767716399" duration="4932000" />
     </task>
     <servers />
   </component>
